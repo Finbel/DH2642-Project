@@ -4,7 +4,7 @@ const httpOptions = {
 
 };
 
-const DinnerModel = function () {
+const Model = function () {
 
 
     let observers = [];
@@ -48,4 +48,4 @@ const DinnerModel = function () {
     };
 };
 
-export const modelInstance = new DinnerModel();
+export const modelInstance = new Model();

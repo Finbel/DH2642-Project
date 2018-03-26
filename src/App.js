@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { modelInstance } from './data/DinnerModel'
 import Homepage from "./Homepage/Homepage";
+import Quiz from "./Quiz/Quiz";
 
 class App extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            title: 'Dinner Planner',
+
         }
 
     }
@@ -20,12 +20,10 @@ class App extends Component {
 
         return (
             <div className="App">
-                <header className="App-header">
-
-                    <Switch>
-                        <Route exact path="/" component={Homepage}/>
-                    </Switch>
-                </header>
+                <Switch>
+                    <Route exact path="/" component={Homepage}/>
+                    <Route path="/:people" component={Quiz}/>
+                </Switch>
             </div>
         );
     }
