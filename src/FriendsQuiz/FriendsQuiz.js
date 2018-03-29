@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 
 class FriendsQuiz extends Component {
@@ -12,7 +13,9 @@ class FriendsQuiz extends Component {
                 <input type="text"></input> <br/>
                 <input type="text"></input> <br/>
                 <div className = "buttons">
-                    <button className="btn btn-info" onClick = {() => this.props.changeStatus()}> Take the quiz !</button>
+                    <Link to="/questions/1">
+                        <button className="btn btn-info" onClick = {() => this.props.changeStatus()}> Take the quiz !</button>
+                    </Link>
                 </div>
             </div>
         );
