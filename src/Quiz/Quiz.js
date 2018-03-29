@@ -8,8 +8,22 @@ class Quiz extends Component {
     constructor(props){
         super(props);
         this.state = {
+            status: 'initial',
             people: this.props.match.params.people,
         }
+        this.changeStatus = this.changeStatus.bind(this);
+        this.getStatus = this.getStatus.bind(this);
+
+    }
+
+    changeStatus(){
+        this.setState({
+            status: 'LOADED',
+        })
+    }
+
+    getStatus(){
+        return this.state.status;
     }
 
 
@@ -17,17 +31,17 @@ class Quiz extends Component {
         let QuizType = null;
         switch(this.state.people){
             case "friends":
-                QuizType = <FriendsQuiz/>;
+                QuizType = <FriendsQuiz changeStatus={this.changeStatus}/>;
                 break;
             case "celebrities":
-                QuizType = <CelebritiesQuiz/>;
+                QuizType = <CelebritiesQuiz changeStatus={this.changeStatus}/>;
                 break;
             default:
                 break;
         }
         return (
             <div className="Quiz">
-                <Sidebar/>
+                <Sidebar model={this.props.model} getStatus={this.getStatus}/>
                 {QuizType}
             </div>
         );

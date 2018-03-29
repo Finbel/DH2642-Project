@@ -30,7 +30,7 @@ class CelebritiesQuiz extends Component {
                     <br/>
                 </div>
                 <div className = "buttons">
-                    <button className="btn btn-info"> Take the quiz !</button>
+                    <button className="btn btn-info" onClick = {() => this.props.changeStatus()}> Take the quiz !</button>
                 </div>
             </div>
         );

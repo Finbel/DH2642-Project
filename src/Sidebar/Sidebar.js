@@ -1,19 +1,36 @@
 import React, { Component } from 'react';
 import Questions from "../Questions/Questions";
+import { Link } from 'react-router-dom';
 
 
 class Sidebar extends Component {
     constructor(props){
         super(props);
         this.state = {
-            status:'initial',
+            numOfQuest: this.props.model.getNumberOfAskedQuestion()
         }
     }
+
+    componentDidMount() {
+        this.props.model.addObserver(this)
+    }
+
+    update() {
+        this.setState({
+            numOfQuest : this.props.model.getNumberOfAskedQuestion()
+        })
+    }
+
+
+
+
     render() {
         let btn = null;
-        switch(this.state.status){
+        switch(this.props.getStatus()){
             case 'initial':
-                btn = <button>Go back and select another quiz</button>
+                btn = <Link to="/">
+                    <button>Go back and select another quiz</button>
+                </Link>
                 break;
             default:
                 break;
