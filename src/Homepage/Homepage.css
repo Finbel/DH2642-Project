@@ -1,9 +1,11 @@
 h3 {
     text-align:center;
+       text-shadow: 1px 1px 1px grey;
 }
 
 #HomeTitle {
     text-align: center;
+    text-shadow: 1px 1px 1px grey;
 }
 
 button {
