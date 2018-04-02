@@ -9,6 +9,7 @@ class Sidebar extends Component {
         this.state = {
             numOfQuest: this.props.model.getNumberOfAskedQuestion()
         }
+        this.props.store.subscribe(()=>this.setState({}));
     }
 
     componentDidMount() {
@@ -26,7 +27,8 @@ class Sidebar extends Component {
 
     render() {
         let btn = null;
-        switch(this.props.getStatus()){
+        console.log(this.props.store.getState().status);
+        switch(this.props.store.getState().status){
             case 'initial':
                 btn = <Link to="/">
                     <button>Go back and select another quiz</button>

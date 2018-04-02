@@ -17,9 +17,13 @@ class Quiz extends Component {
     }
 
     changeStatus(){
-        this.setState({
-            status: 'LOADED',
-        })
+        // this.setState({
+        //     status: 'LOADED',
+        // })
+        this.props.store.dispatch({
+            type:'QUIZ_STARTED',
+            newStatus: 'LOADED'
+        });
     }
 
     getStatus(){
@@ -31,17 +35,17 @@ class Quiz extends Component {
         let QuizType = null;
         switch(this.state.people){
             case "friends":
-                QuizType = <FriendsQuiz changeStatus={this.changeStatus}/>;
+                QuizType = <FriendsQuiz changeStatus={this.changeStatus} store={this.props.store}/>;
                 break;
             case "celebrities":
-                QuizType = <CelebritiesQuiz changeStatus={this.changeStatus}/>;
+                QuizType = <CelebritiesQuiz changeStatus={this.changeStatus} store={this.props.store}/>;
                 break;
             default:
                 break;
         }
         return (
             <div className="Quiz">
-                <Sidebar model={this.props.model} getStatus={this.getStatus}/>
+                <Sidebar model={this.props.model} store={this.props.store}/>
                 {QuizType}
             </div>
         );
