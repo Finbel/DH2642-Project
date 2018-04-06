@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { createStore } from 'redux';
 import Homepage from "./Homepage/Homepage";
-import Quiz from "./Quiz/Quiz";
 import SelectedArtists from "./SelectedArtists/SelectedArtists";
 import RunningQuiz from "./RunningQuiz/RunningQuiz";
 import { modelInstance } from './data/Model'
@@ -14,12 +13,7 @@ const store= createStore(quizApp);
 
 
 class App extends Component {
-    constructor(props) {
-        super(props)
-
-    }
-
-
+    
     render() {
         return (
             <div className="App">

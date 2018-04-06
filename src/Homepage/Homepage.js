@@ -8,10 +8,10 @@ class Homepage extends Component {
         return (
             <div className="Homepage">
                 <div className = "row">
-                    <div className = "col-md-5">
+                    <div className = "col-md-4">
                         <p> Picture </p>
                     </div>
-                    <div className = "col-md-7">
+                    <div className = "col-md-8">
                         <div className = "row">
                             <h3> Test yourself about your favorites singers ! How much do you know their songs ?</h3>
                         </div>

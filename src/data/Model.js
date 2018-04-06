@@ -6,21 +6,30 @@ const httpOptions = {
 
 const Model = function () {
 
-    let artists = [null, null, null, null, null];
+    let artistsName = [null, null, null, null, null];
+    let artists = [];
     let observers = [];
     let asked = [];
     let questions = ["Who posted this photo ?", "Which picture has the more likes ?", "Who has the more followers ?",
         "What is the most popular hashtag ?", "Which picture matches the following text ?", "Which text matches the following pictures ?"];
 
-    this.setArtist = function(name, id){
-        artists[id-1] = name;
+    this.setArtistsName = function(name, id){
+        artistsName[id-1] = name;
     }
 
-    this.getArtists = function (id){
-        if (id == 0){
-            return artists;
+    this.getArtistsName = function (id){
+        if (id === 0){
+            return artistsName;
         }
-        return artists[id-1];
+        return artistsName[id-1];
+    }
+
+    this.addArtists = function(artist){
+        artists.push(artist);
+    }
+
+    this.getArtists = function(){
+        return artists;
     }
 
     function getRandomInt(max) {

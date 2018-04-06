@@ -5,13 +5,22 @@ import Sidebar from "../Sidebar/Sidebar";
 
 
 class SelectedArtists extends Component {
-
     constructor(props){
         super(props);
         this.state = {
-            artists: [null, null, null, null, null]
+            status: 'initial',
+            artists: this.props.model.getArtists()
         }
-        this.props.store.subscribe(()=>this.setState({}));
+    }
+
+    changeStatus(){
+        this.setState({
+            status: 'LOADED'
+        })
+        this.props.store.dispatch({
+            type:'QUIZ_STARTED',
+            newStatus: 'LOADED'
+        });
     }
 
     componentDidMount() {
@@ -20,7 +29,7 @@ class SelectedArtists extends Component {
 
     update() {
         this.setState({
-            artists : [null, null, null, null, null] //TODO
+            artists : this.props.model.getArtists()
         })
     }
     refresh = function() {
@@ -28,18 +37,19 @@ class SelectedArtists extends Component {
     }
 
     setArtists = function(name, id){
-        this.props.model.setArtist(name, id);
+        this.props.model.setArtistsName(name, id);
 
     }
 
-    dispatchArtist = function(){
+    takeQuiz = function(){
+        this.changeStatus();
         for(var i = 1; i < 6; i++){
-            this.props.store.dispatch({
-                type:'ADD_ARTIST',
-                artistObject : this.props.model.searchArtist(this.props.model.getArtists(i))
-            });
+            var name = this.props.model.getArtistsName(i).split(" ");
+            name = name.join("+");
+            this.props.model.addArtists(this.props.model.searchArtist(name));
         }
     }
+
 
     render() {
         return (
@@ -83,7 +93,7 @@ class SelectedArtists extends Component {
                     </div>
                     <div className = "buttons">
                         <Link to="/questions/1">
-                            <button className="btn btn-info" onClick = {() => this.props.changeStatus()}> Take the quiz !</button>
+                            <button className="btn btn-info" onClick = {() => this.takeQuiz()}> Take the quiz !</button>
                         </Link>
                     </div>
                 </div>
