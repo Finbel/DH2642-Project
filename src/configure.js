@@ -1,3 +1,3 @@
-var YOUR_API_KEY = 'Qu9grxVNWpmshA4Kl9pTwyiJxVGUp1lKzrZjsnghQMkFkfA4LB';
+var YOUR_API_KEY = '1VcQLYL84umsh80TplKLxd6nVqEkp1jRfgZjsnNVj7RHD4nzvb';
 
 module.exports = YOUR_API_KEY;

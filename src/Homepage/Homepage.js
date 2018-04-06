@@ -13,16 +13,13 @@ class Homepage extends Component {
                     </div>
                     <div className = "col-md-7">
                         <div className = "row">
-                            <h3> How much do you know about your friends or celebrities ?</h3>
+                            <h3> Test yourself about your favorites singers ! How much do you know their songs ?</h3>
                         </div>
+                        <p>Choose up to 5 different artists and take the quiz about them and their songs. Are you ready ?</p>
                         <h2 id="HomeTitle"> Take the quiz !</h2>
                         <div className = "buttons">
-                            <Link to = "/friends">
-                                <button className = "btn btn-info">Quiz about your friends</button>
-                            </Link>
-                            <br/><br/>
-                            <Link to = "/celebrities">
-                                <button className = "btn btn-info">Quiz about celebrities</button>
+                            <Link to = "/selection">
+                                <button className = "btn btn-info">Let's select your artists</button>
                             </Link>
                         </div>
                     </div>

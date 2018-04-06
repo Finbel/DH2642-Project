@@ -40,7 +40,7 @@ class Sidebar extends Component {
 
         return (
             <div className="Sidebar col-md-5">
-                <h2>InstaQuiz</h2>
+                <h2>Quiz</h2>
                 <Questions/>
                 {btn}
             </div>

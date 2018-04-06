@@ -3,17 +3,13 @@ import { Route, Switch } from 'react-router-dom';
 import { createStore } from 'redux';
 import Homepage from "./Homepage/Homepage";
 import Quiz from "./Quiz/Quiz";
+import SelectedArtists from "./SelectedArtists/SelectedArtists";
 import RunningQuiz from "./RunningQuiz/RunningQuiz";
 import { modelInstance } from './data/Model'
-import status from './reducer/status';
+import quizApp from './reducer/reducers';
 
-function reducer(state = {}, action) {
-    return {
-        status: status(state.status, action)
-    };
-}
 
-const store= createStore(reducer);
+const store= createStore(quizApp);
 
 
 
@@ -30,7 +26,7 @@ class App extends Component {
                 <Switch>
                     <Route exact path="/" component={Homepage}/>
                     <Route path="/questions/:id" component={(props) => <RunningQuiz {...props} model={modelInstance} store={store}/>}/>
-                    <Route path="/:people" component={(props) => <Quiz {...props} model={modelInstance} store={store}/>}/>
+                    <Route path="/selection" component={(props) => <SelectedArtists {...props} model={modelInstance} store={store}/>}/>
                 </Switch>
             </div>
         );

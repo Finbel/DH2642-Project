@@ -6,11 +6,22 @@ const httpOptions = {
 
 const Model = function () {
 
-
+    let artists = [null, null, null, null, null];
     let observers = [];
     let asked = [];
     let questions = ["Who posted this photo ?", "Which picture has the more likes ?", "Who has the more followers ?",
         "What is the most popular hashtag ?", "Which picture matches the following text ?", "Which text matches the following pictures ?"];
+
+    this.setArtist = function(name, id){
+        artists[id-1] = name;
+    }
+
+    this.getArtists = function (id){
+        if (id == 0){
+            return artists;
+        }
+        return artists[id-1];
+    }
 
     function getRandomInt(max) {
         return Math.floor(Math.random() * Math.floor(max));
@@ -32,6 +43,47 @@ const Model = function () {
 
     // API Calls
 
+    this.getLyrics = function(id){
+        var param = 'track_id='+id;
+        const url = `https://musixmatchcom-musixmatch.p.mashape.com/wsr/1.1/track.lyrics.get?${param}`
+        return fetch(url, httpOptions)
+            .then(processResponse)
+            .catch(handleError)
+
+    }
+
+    this.searchLyrics = function(artist, song){
+        var param = 'q_artist=' + artist + '&q_track=' + song;
+        const url = `https://musixmatchcom-musixmatch.p.mashape.com/wsr/1.1/matcher.lyrics.get?${param}`
+        return fetch(url, httpOptions)
+            .then(processResponse)
+            .catch(handleError)
+    }
+
+    this.searchArtist = function(name){
+        var param = 'page=1&page_size=5&q_artist=' + name + '&s_artist_rating=desc';
+        const url = `https://musixmatchcom-musixmatch.p.mashape.com/wsr/1.1/artist.search?${param}`;
+        return fetch(url, httpOptions)
+            .then(processResponse)
+            .catch(handleError)
+    }
+
+    this.getRelatedArtists = function(id){
+        var param = 'artist_id=' + id;
+        const url = `https://musixmatchcom-musixmatch.p.mashape.com/wsr/1.1/artist.related.get?${param}`;
+        return fetch(url, httpOptions)
+            .then(processResponse)
+            .catch(handleError)
+    }
+
+    this.getArtist = function(id){
+        var param = 'artist_id=' + id;
+        const url = `https://musixmatchcom-musixmatch.p.mashape.com/wsr/1.1/artist.get?${param}`;
+        return fetch(url, httpOptions)
+            .then(processResponse)
+            .catch(handleError)
+    }
+
 
 
     // API Helper methods
@@ -46,10 +98,10 @@ const Model = function () {
     const handleError = function (error) {
         if (error.json) {
             error.json().then(error => {
-                console.error('getAllDishes() API Error:', error.message || error)
+                console.error('API Error:', error.message || error)
             })
         } else {
-            console.error('getAllDishes() API Error:', error.message || error)
+            console.error('API Error:', error.message || error)
         }
     }
 
