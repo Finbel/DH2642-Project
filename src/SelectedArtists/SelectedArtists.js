@@ -16,7 +16,7 @@ class SelectedArtists extends Component {
     changeStatus(){
         this.setState({
             status: 'LOADED'
-        })
+        });
         this.props.store.dispatch({
             type:'QUIZ_STARTED',
             newStatus: 'LOADED'

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Questions from "../Questions/Questions";
 import { Link } from 'react-router-dom';
 
 
@@ -22,6 +21,25 @@ class Sidebar extends Component {
         })
     }
 
+    displayQuest = function(quest){
+        let success;
+        switch(quest.success){
+            case 1:
+                success = "1pt";
+                break;
+            case 2:
+                success = "0pt";
+                break;
+            default:
+                success = "";
+                break;
+        }
+        return <div key={quest.index}>Question {quest.index} {success}</div>
+    }
+
+    displayQuestions = function(){
+        return this.props.model.getAskedQuestions().map((question) => this.displayQuest(question))
+    }
 
 
 
@@ -41,7 +59,8 @@ class Sidebar extends Component {
         return (
             <div className="Sidebar col-md-5">
                 <h2>Quiz</h2>
-                <Questions/>
+                Question {this.state.numOfQuest}/10 <br/>
+                {this.displayQuestions()}
                 {btn}
             </div>
         );

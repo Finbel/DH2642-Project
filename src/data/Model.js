@@ -10,8 +10,8 @@ const Model = function () {
     let artists = [];
     let observers = [];
     let asked = [];
-    let questions = ["Who posted this photo ?", "Which picture has the more likes ?", "Who has the more followers ?",
-        "What is the most popular hashtag ?", "Which picture matches the following text ?", "Which text matches the following pictures ?"];
+    let questions = [{question: "Who this song belongs to ?", id : 0}, {question: "Complete the lyrics of this song", id:1},
+        {question: "Match the lyrics to the song", id :2}];
 
     this.setArtistsName = function(name, id){
         artistsName[id-1] = name;
@@ -32,17 +32,21 @@ const Model = function () {
         return artists;
     }
 
-    function getRandomInt(max) {
+    this.getRandomInt = function(max) {
         return Math.floor(Math.random() * Math.floor(max));
     }
 
     this.getRandomQuestion = function () {
-        return questions[getRandomInt(questions.length)];
+        return questions[this.getRandomInt(questions.length)];
     }
 
     this.addAskedQuestion = function(question) {
-        asked.add(question);
+        asked.push({question : question.question, id: question.id, index: asked.length+1, success : 0});
         notifyObservers();
+    }
+
+    this.getAskedQuestions = function(){
+        return asked;
     }
 
     this.getNumberOfAskedQuestion = function() {
