@@ -43,7 +43,8 @@ class SelectedArtists extends Component {
 
     takeQuiz = function(){
         this.changeStatus();
-        for(var i = 1; i < 6; i++){
+        for(var i = 1; i < 5; i++){
+            console.log(this.props.model.getArtistsName(i).split(" "));
             var name = this.props.model.getArtistsName(i).split(" ");
             name = name.join("+");
             this.props.model.addArtists(this.props.model.searchArtist(name));
@@ -86,10 +87,6 @@ class SelectedArtists extends Component {
                         <input type="text" id="search3" onChange = {(event) => this.setArtists(event.target.value, 3)}></input>
                         <br/><br/>
                         <input type="text" id="search4" onChange = {(event) => this.setArtists(event.target.value, 4)}></input>
-                        <br/><br/>
-                        <input type="text" id="search5" onChange = {(event) => this.setArtists(event.target.value, 5)}></input>
-                        <br/><br/>
-                        <button className="btn btn-info">Submit</button>
                     </div>
                     <div className = "buttons">
                         <Link to="/questions/1">

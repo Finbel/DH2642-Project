@@ -10,8 +10,9 @@ const Model = function () {
     let artists = [];
     let observers = [];
     let asked = [];
-    let questions = [{question: "Who this song belongs to ?", id : 0}, {question: "Complete the lyrics of this song", id:1},
-        {question: "Match the lyrics to the song", id :2}];
+    let questions = [{question: "Who this song belongs to ?", id : 0}]
+        //, {question: "Complete the lyrics of this song", id:1},
+        //{question: "Match the lyrics to the song", id :2}];
 
     this.setArtistsName = function(name, id){
         artistsName[id-1] = name;
@@ -56,9 +57,17 @@ const Model = function () {
 
     // API Calls
 
+    this.getSongs = function(artist){
+        var param = 'f_has_lyrics=1&page=1&page_size=5&q_track_artist='+artist+'&s_track_rating=desc';
+        const url = `https://musixmatchcom-musixmatch.p.mashape.com/wsr/1.1/track.search?${param}`;
+        return fetch(url, httpOptions)
+            .then(processResponse)
+            .catch(handleError)
+    }
+
     this.getLyrics = function(id){
         var param = 'track_id='+id;
-        const url = `https://musixmatchcom-musixmatch.p.mashape.com/wsr/1.1/track.lyrics.get?${param}`
+        const url = `https://musixmatchcom-musixmatch.p.mashape.com/wsr/1.1/track.lyrics.get?${param}`;
         return fetch(url, httpOptions)
             .then(processResponse)
             .catch(handleError)
@@ -67,18 +76,16 @@ const Model = function () {
 
     this.searchLyrics = function(artist, song){
         var param = 'q_artist=' + artist + '&q_track=' + song;
-        const url = `https://musixmatchcom-musixmatch.p.mashape.com/wsr/1.1/matcher.lyrics.get?${param}`
+        const url = `https://musixmatchcom-musixmatch.p.mashape.com/wsr/1.1/matcher.lyrics.get?${param}`;
         return fetch(url, httpOptions)
             .then(processResponse)
             .catch(handleError)
     }
 
     this.searchArtist = function(name){
-        var param = 'page=1&page_size=5&q_artist=' + name + '&s_artist_rating=desc';
+        var param = 'page=1&page_size=1&q_artist=' + name + '&s_artist_rating=desc';
         const url = `https://musixmatchcom-musixmatch.p.mashape.com/wsr/1.1/artist.search?${param}`;
-        return fetch(url, httpOptions)
-            .then(processResponse)
-            .catch(handleError)
+        return fetch(url, httpOptions).then(processResponse).catch(handleError);
     }
 
     this.getRelatedArtists = function(id){
