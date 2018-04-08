@@ -1,6 +1,7 @@
 h3 {
-    text-align:center;
-       text-shadow: 1px 1px 1px grey;
+    text-align:left;
+    text-shadow: 1px 1px 1px grey;
+
 }
 
 #HomeTitle {
@@ -16,4 +17,9 @@ button {
 
 .buttons {
     text-align: center;
+}
+
+.title{
+	padding:80px;
+	height:300px;
 }

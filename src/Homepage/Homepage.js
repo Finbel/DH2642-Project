@@ -12,11 +12,12 @@ class Homepage extends Component {
                         <p> Picture </p>
                     </div>
                     <div className = "col-md-8">
-                        <div className = "row">
+                        <div className = "row title">
                             <h3> Test yourself about your favorites singers ! How much do you know their songs ?</h3>
+                            <p>Choose up to 5 different artists and take the quiz about them and their songs. Are you ready ?</p>
                         </div>
-                        <p>Choose up to 5 different artists and take the quiz about them and their songs. Are you ready ?</p>
-                        <h2 id="HomeTitle"> Take the quiz !</h2>
+                       
+                        <h2 id="HomeTitle"> Take the quiz !</h2><br/>
                         <div className = "buttons">
                             <Link to = "/selection">
                                 <button className = "btn btn-info">Let's select your artists</button>
