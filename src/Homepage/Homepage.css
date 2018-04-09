@@ -9,6 +9,10 @@ h3 {
     text-shadow: 1px 1px 1px grey;
 }
 
+p {
+	font-family: sans-serif;
+}
+
 button {
     text-align: center;
     padding: auto;

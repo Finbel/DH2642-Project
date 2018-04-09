@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from "../Sidebar/Sidebar";
-
+import './SelectedArtists.css';
 
 
 class SelectedArtists extends Component {
@@ -83,7 +83,8 @@ class SelectedArtists extends Component {
                         <br/>
                     </div>
                     <div className="row">
-                        You can chose your own celebrities here : <br/>
+                        Didn't find artists you want? You can type in your favourite artists here : <br/><br/>
+                        <div className="typein">
                         <input type="text" id="search1" onChange = {(event) => this.setArtists(event.target.value, 1)}></input>
                         <br/><br/>
                         <input type="text" id="search2" onChange = {(event) => this.setArtists(event.target.value, 2)}></input>
@@ -91,6 +92,7 @@ class SelectedArtists extends Component {
                         <input type="text" id="search3" onChange = {(event) => this.setArtists(event.target.value, 3)}></input>
                         <br/><br/>
                         <input type="text" id="search4" onChange = {(event) => this.setArtists(event.target.value, 4)}></input>
+                        </div>
                     </div>
                     <div className = "buttons">
                         <Link to="/questions/1">

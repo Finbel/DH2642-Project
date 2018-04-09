@@ -1,0 +1,11 @@
+# Dependencies
+node_modules/
+
+# Build
+build/
+
+# Package lock
+package-lock.json
+
+# Configuration
+src/configure.js
