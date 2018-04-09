@@ -13,16 +13,6 @@ const Model = function () {
     let questions = [{question: "Who this song belongs to ?", id : 0}]
         //, {question: "Complete the lyrics of this song", id:1},
         //{question: "Match the lyrics to the song", id :2}];
-    let goodSong;
-
-    this.setGoodSong = function(song){
-        goodSong = song;
-        notifyObservers("song")
-    }
-
-    this.getGoodSong = function(){
-        return goodSong;
-    }
 
     this.setArtistsName = function(name, id){
         artistsName[id-1] = name;
