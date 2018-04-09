@@ -13,6 +13,16 @@ const Model = function () {
     let questions = [{question: "Who this song belongs to ?", id : 0}]
         //, {question: "Complete the lyrics of this song", id:1},
         //{question: "Match the lyrics to the song", id :2}];
+    let goodSong;
+
+    this.setGoodSong = function(song){
+        goodSong = song;
+        notifyObservers("song")
+    }
+
+    this.getGoodSong = function(){
+        return goodSong;
+    }
 
     this.setArtistsName = function(name, id){
         artistsName[id-1] = name;
@@ -59,6 +69,8 @@ const Model = function () {
     // API Calls
 
     this.getSongs = function(artist){
+        artist = artist.split(" ");
+        artist = artist.join("+");
         var param = 'f_has_lyrics=1&page=1&page_size=5&q_track_artist='+artist+'&s_track_rating=desc';
         const url = `https://musixmatchcom-musixmatch.p.mashape.com/wsr/1.1/track.search?${param}`;
         return fetch(url, httpOptions)
