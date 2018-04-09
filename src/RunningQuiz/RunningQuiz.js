@@ -9,17 +9,36 @@ class RunningQuiz extends Component {
         super(props);
         this.state = {
             askedQuestions : modelInstance.getAskedQuestions(),
+            artists: modelInstance.getArtists()
         }
+        modelInstance.addObserver(this);
+    }
+
+    update(msg){
+        if (msg === 'artists') {
+            this.setState({
+                artists: modelInstance.getArtists()
+            })
+            console.log(this.state.artists);
+        }
+
     }
 
     nextQuestion = function(){
         let question = modelInstance.getRandomQuestion();
+        let artists = this.state.artists;
+        if (artists.length !== 4 || artists === undefined){
+            return;
+        }
         modelInstance.addAskedQuestion(question);
-        let artists = modelInstance.getArtists();
-        let goodArtist = artists[modelInstance.getRandomInt(artists.length)]; //Don't know how to get the result
+        console.log("added question");
+
+        console.log(artists);
+        let goodArtist = artists[modelInstance.getRandomInt(artists.length)][0]
+        console.log(goodArtist)//Don't know how to get the result
         //let songs = modelInstance.getSongs(goodArtist);
         //let goodSong = songs[modelInstance.getRandomInt(5)];
-        console.log(goodArtist);
+
         switch(question.id){
             case 0:
                 //Pick up the name of the song goodSong

@@ -47,7 +47,11 @@ class SelectedArtists extends Component {
             console.log(this.props.model.getArtistsName(i).split(" "));
             var name = this.props.model.getArtistsName(i).split(" ");
             name = name.join("+");
-            this.props.model.addArtists(this.props.model.searchArtist(name));
+            this.props.model.searchArtist(name).then(j => {
+                console.log(j);
+                this.props.model.addArtists(j)
+            })
+
         }
     }
 

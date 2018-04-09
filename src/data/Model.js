@@ -27,6 +27,7 @@ const Model = function () {
 
     this.addArtists = function(artist){
         artists.push(artist);
+        notifyObservers('artists');
     }
 
     this.getArtists = function(){
@@ -135,8 +136,8 @@ const Model = function () {
         observers = observers.filter(o => o !== observer);
     };
 
-    const notifyObservers = function () {
-        observers.forEach(o => o.update());
+    const notifyObservers = function (msg) {
+        observers.forEach(o => o.update(msg));
     };
 };
 
