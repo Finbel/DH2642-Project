@@ -6,3 +6,6 @@ build/
 
 # Package lock
 package-lock.json
+
+# Configuration
+src/configure.js
