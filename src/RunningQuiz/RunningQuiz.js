@@ -37,15 +37,13 @@ class RunningQuiz extends Component {
         console.log(artists);
         let goodArtist = artists[modelInstance.getRandomInt(artists.length)][0];
         console.log(goodArtist);
-        let songs;
         let goodSong;
         modelInstance.getSongs(goodArtist.artist_name).then((data) => {
-            songs = data;
             goodSong = data[modelInstance.getRandomInt(data.length)];
-            console.log(songs[1]);
             console.log(this.displayQuestion(question, goodArtist, goodSong));
             let obj = this.displayQuestion(question, goodArtist, goodSong);
-            return <div>{obj.quest} {obj.param} <br/> {obj.ans}</div>
+            return 'hello'
+            //return <div>{obj.quest} {obj.param} <br/> {obj.ans}</div>
         });
     }
 
