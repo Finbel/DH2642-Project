@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from "../Sidebar/Sidebar";
-import './SelectedArtists.css';
+//import './SelectedArtists.css';
 
 
 class SelectedArtists extends Component {
