@@ -8,7 +8,7 @@ class Homepage extends Component {
         return (
             <div className="Homepage">
                 <div className = "row">
-                    <div className = "col-md-4">
+                    <div className = "col-md-4 side">
                         <p> Picture </p>
                     </div>
                     <div className = "col-md-8">
