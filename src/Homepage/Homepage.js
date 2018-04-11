@@ -22,7 +22,7 @@ class Homepage extends Component {
                         </div>
                         
                         <div className = "row titledescription">
-                            Choose up to 5 different artists and take the quiz about their songs. Are you ready ?
+                            Choose up to 4 different artists and take the quiz about their songs. Are you ready ?
                         </div>
                        
                         
