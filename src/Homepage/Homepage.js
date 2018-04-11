@@ -7,23 +7,35 @@ class Homepage extends Component {
     render() {
         return (
             <div className="Homepage">
+
                 <div className = "row">
-                    <div className = "col-md-4 side">
-                        <p> Picture </p>
+                    <div className = "col-md-2">
                     </div>
-                    <div className = "col-md-8">
-                        <div className = "row title">
-                            <h3> Test yourself about your favorites singers ! How much do you know their songs ?</h3>
-                            <p>Choose up to 5 different artists and take the quiz about them and their songs. Are you ready ?</p>
+
+                    <div className = "col-md-4">
+                        <div className = "row HomeTitle">
+                        MusicQuiz
+                        </div>
+
+                        <div className = "row sub-title">
+                            How much do you know about your favourite artists’ work？                          
+                        </div>
+                        
+                        <div className = "row titledescription">
+                            Choose up to 5 different artists and take the quiz about their songs. Are you ready ?
                         </div>
                        
-                        <h2 id="HomeTitle"> Take the quiz !</h2><br/>
+                        
                         <div className = "buttons">
                             <Link to = "/selection">
-                                <button className = "btn btn-info">Let's select your artists</button>
+                                <button className = "btn button">Let's select your artists</button>
                             </Link>
                         </div>
                     </div>
+                    
+                    <div className = "col-md-6">
+                    </div>
+
                 </div>
             </div>
         );
