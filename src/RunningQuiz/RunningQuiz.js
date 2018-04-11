@@ -42,9 +42,13 @@ class RunningQuiz extends Component {
             goodSong = data[modelInstance.getRandomInt(data.length)];
             console.log(this.displayQuestion(question, goodArtist, goodSong));
             let obj = this.displayQuestion(question, goodArtist, goodSong);
-            return 'hello'
+            /* Here, I want to return the HTML code I want to display on the screen
+            * but it doesn't work in the .then() function apparently.
+            * Don't know how to return the object I need here. I can't put a return
+            * at line 51 (after the then()) otherwise the API call won't be finished */
             //return <div>{obj.quest} {obj.param} <br/> {obj.ans}</div>
         });
+
     }
 
     displayQuestion = function(question, goodArtist, goodSong){
