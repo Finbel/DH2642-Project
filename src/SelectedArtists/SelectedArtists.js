@@ -46,26 +46,13 @@ class SelectedArtists extends Component {
         });
     }
 
-    takeQuiz = function(){
-        this.changeStatus();
-        for(var i = 1; i < 5; i++){
-            console.log(this.props.model.getArtistsName(i).split(" "));
-            var name = this.props.model.getArtistsName(i).split(" ");
-            name = name.join("+");
-            this.props.model.searchArtist(name).then(j => {
-                console.log(j);
-                this.props.model.addArtists(j)
-            })
-
-        }
-    }
-
     displayRandomArtists = function(){
         return this.state.suggestion.map((artist) =>
             <div className="col-md-2"><button onClick={() => {
                 this.props.model.searchArtist(artist).then(data =>
                     this.props.model.addArtists(data[0])).catch( () =>
-                console.log('error'))
+                console.log('error'));
+                console.log("click")
             }}>{artist}</button></div>
         );
     }
@@ -133,7 +120,7 @@ class SelectedArtists extends Component {
                     {this.displayArtists()}
                     <div className = "buttons">
                         <Link to="/questions/1">
-                            <button className="btn btn-info" onClick = {() => this.takeQuiz()}> Take the quiz !</button>
+                            <button className="btn btn-info" onClick = {() => this.changeStatus()}> Take the quiz !</button>
                         </Link>
                     </div>
                 </div>

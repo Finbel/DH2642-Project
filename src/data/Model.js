@@ -36,11 +36,15 @@ const Model = function () {
     }
 
     this.addArtists = function(artist){
+        if(artists.length == 4){
+            alert("You can't have more than 4 artists");
+            return;
+        }
         for(var i = 0; i< artists.length; i++){
             if (artist.artist_id === artists[i].artist_id){
-                alert("You've already chosen this artist")
+                alert("You've already chosen this artist");
+                return;
             }
-            return;
         }
         artists.push(artist);
         notifyObservers('artists');

@@ -10,7 +10,8 @@ class RunningQuiz extends Component {
         this.state = {
             askedQuestions : modelInstance.getAskedQuestions(),
             artists: modelInstance.getArtists(),
-            songs: []
+            songs: [],
+            status:'initial'
         }
         modelInstance.addObserver(this);
     }
@@ -25,29 +26,25 @@ class RunningQuiz extends Component {
 
     }
 
-    nextQuestion = function() {
-        let question = modelInstance.getRandomQuestion();
-        let artists = this.state.artists;
+    async nextQuestion() {
+        const question = modelInstance.getRandomQuestion();
+        const artists = this.state.artists;
         if (artists.length !== 4 || artists === undefined) {
             return;
         }
         modelInstance.addAskedQuestion(question);
-        console.log("added question");
-
-        console.log(artists);
-        let goodArtist = artists[modelInstance.getRandomInt(artists.length)][0];
-        console.log(goodArtist);
-        let goodSong;
-        modelInstance.getSongs(goodArtist.artist_name).then((data) => {
-            goodSong = data[modelInstance.getRandomInt(data.length)];
-            console.log(this.displayQuestion(question, goodArtist, goodSong));
-            let obj = this.displayQuestion(question, goodArtist, goodSong);
-            /* Here, I want to return the HTML code I want to display on the screen
-            * but it doesn't work in the .then() function apparently.
-            * Don't know how to return the object I need here. I can't put a return
-            * at line 51 (after the then()) otherwise the API call won't be finished */
-            //return <div>{obj.quest} {obj.param} <br/> {obj.ans}</div>
+        const goodArtist = artists[modelInstance.getRandomInt(artists.length)];
+        // Wait until the promise resolves
+        const goodArtistSongs = await modelInstance.getSongs(goodArtist.artist_name);
+        // Here we have access to the resolved promise
+        const goodSong = goodArtistSongs[modelInstance.getRandomInt(goodArtistSongs.length)]
+        const obj = this.displayQuestion(question, goodArtist, goodSong)
+        // Here you should have access to obj
+        console.log(obj)
+        this.setState({
+            status:'LOADED'
         });
+        return (<div>{obj.quest} {obj.param} <br/> {obj.ans}</div>);
 
     }
 
@@ -87,11 +84,21 @@ class RunningQuiz extends Component {
 
     render() {
         console.log(this.nextQuestion())
+        let res = null;
+        switch(this.state.status){
+            case 'initial':
+                break;
+            case 'LOADED':
+                res = this.nextQuestion();
+                break;
+            default:
+                break;
+        }
         return (
             <div className="RunningQuiz">
                 <Sidebar model={modelInstance} store={this.props.store}/>
                 <div className="col-md-7">
-                    {this.nextQuestion()} <br/>
+                    {res}<br/>
                     - Prop 1 <br/>
                     - Prop 2 <br/>
                     - Prop 3 <br/>
