@@ -7,7 +7,8 @@ class Sidebar extends Component {
         super(props);
         this.state = {
             numOfQuest: this.props.model.getNumberOfAskedQuestion(),
-            artists: this.props.model.getArtists()
+            artists: this.props.model.getArtists(),
+            askedQuestions: this.props.model.getAskedQuestions()
         }
         this.props.store.subscribe(()=>this.setState({}));
     }
@@ -23,10 +24,10 @@ class Sidebar extends Component {
             });
             console.log(this.state.artists)
         }
-        this.setState({
-            numOfQuest : this.props.model.getNumberOfAskedQuestion(),
+        //this.setState({
+        //numOfQuest : this.props.model.getNumberOfAskedQuestion(),
+        //})
 
-        })
     }
 
     displayQuest = function(quest){
@@ -46,7 +47,7 @@ class Sidebar extends Component {
     }
 
     displayQuestions = function(){
-        return this.props.model.getAskedQuestions().map((question) => this.displayQuest(question))
+        return this.state.askedQuestions.map((question) => this.displayQuest(question))
     }
 
     displayArtists = function(){
