@@ -88,6 +88,7 @@ class SelectedArtists extends Component {
         switch (this.state.searchStatus) {
             case 'initial':
                 waitForArtists = null;
+                break;
             case 'loading':
                 waitForArtists = <em>Loading...</em>
                 break;

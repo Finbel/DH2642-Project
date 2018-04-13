@@ -12,9 +12,10 @@ const Model = function () {
     let artists = [];
     let observers = [];
     let asked = [];
-    let questions = [{question: "Who this song belongs to ?", id : 0}]
-        //, {question: "Complete the lyrics of this song", id:1},
-        //{question: "Match the lyrics to the song", id :2}];
+    let questions = [
+        {question: "Who this song belongs to ?", id : 0},
+         {question: "Complete the lyrics of this song", id:1},
+        {question: "Match the lyrics to the song", id :2}];
 
     this.getRandomArtists = function(){
         let res = [];
@@ -36,7 +37,7 @@ const Model = function () {
     }
 
     this.addArtists = function(artist){
-        if(artists.length == 4){
+        if(artists.length === 4){
             alert("You can't have more than 4 artists");
             return;
         }
@@ -64,7 +65,7 @@ const Model = function () {
 
     this.addAskedQuestion = function(question) {
         asked.push({question : question.question, id: question.id, index: asked.length+1, success : 0});
-        notifyObservers();
+        notifyObservers("quest");
     }
 
     this.getAskedQuestions = function(){

@@ -10,8 +10,7 @@ class RunningQuiz extends Component {
         this.state = {
             askedQuestions : modelInstance.getAskedQuestions(),
             artists: modelInstance.getArtists(),
-            songs: [],
-            status:'initial'
+            nextQuestion: null,
         }
         modelInstance.addObserver(this);
     }
@@ -26,10 +25,14 @@ class RunningQuiz extends Component {
 
     }
 
+
+
     async nextQuestion() {
+        console.log("nexquestion()")
         const question = modelInstance.getRandomQuestion();
         const artists = this.state.artists;
-        if (artists.length !== 4 || artists === undefined) {
+        let lyrics = null;
+        if (artists.length !== 4 || artists === undefined || this.state.nextQuestion || this.state.missingWords || this.state.songs) {
             return;
         }
         modelInstance.addAskedQuestion(question);
@@ -37,20 +40,59 @@ class RunningQuiz extends Component {
         // Wait until the promise resolves
         const goodArtistSongs = await modelInstance.getSongs(goodArtist.artist_name);
         // Here we have access to the resolved promise
-        const goodSong = goodArtistSongs[modelInstance.getRandomInt(goodArtistSongs.length)]
-        const obj = this.displayQuestion(question, goodArtist, goodSong)
+        const goodSong = goodArtistSongs[modelInstance.getRandomInt(goodArtistSongs.length)];
+        if(question.id === 1 || question.id === 2){
+            lyrics = await modelInstance.getLyrics(goodSong.track_id);
+        }
+        if(question.id === 2){
+            await this.threeSongs(goodArtist);
+        }
+        const obj = this.displayQuestion(question, goodArtist, goodSong, lyrics)
         // Here you should have access to obj
-        console.log(obj)
         this.setState({
-            status:'LOADED'
-        });
-        return (<div>{obj.quest} {obj.param} <br/> {obj.ans}</div>);
+            nextQuestion: obj
+        })
 
     }
 
-    displayQuestion = function(question, goodArtist, goodSong){
-    let questionParam;
-    let answers;
+    createBlank(verse){
+        //TO CHANGE
+        let words = verse.split(" ");
+        let missingwords = [words[3], words[4], words[5]];
+        this.setState({
+            missingWords: missingwords.join(" ")
+        })
+        words[3] = "_";
+        words[4] = "_";
+        words[5] = "_";
+        return words.join(" ");
+    }
+
+    async threeSongs(goodArtist){
+        let songs = [];
+        for (var i = 0; i < this.state.artists.length; i++){
+            if(goodArtist.artist_id !== this.state.artists[i].artist_id) {
+                const song = await modelInstance.getSongs(this.state.artists[i].artist_name);
+                songs.push(song[modelInstance.getRandomInt(song.length)]);
+            }
+        }
+        this.setState({
+            songs: songs
+        })
+    }
+
+    shuffle(a) {
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
+
+    displayQuestion = function(question, goodArtist, goodSong, lyrics){
+        let questionParam;
+        let answers;
+        let verses;
         switch(question.id){
             case 0:
                 //Pick up the name of the song goodSong
@@ -69,12 +111,23 @@ class RunningQuiz extends Component {
                 //Remove some words in this piece of lyrics
                 //Input for the missing words
                 //verify the matching
+                verses = lyrics.lyrics_body.split("\n\n");
+                questionParam = <div>{goodArtist.artist_name} - {goodSong.track_name} <br/> {this.createBlank(verses[1])}</div>;
+                answers = <input type="text" onChange={(event) => this.setState({userAnswer: event.target.value})}>
+                </input>
                 break;
             case 2:
                 //Pick up the id of the song goodSong
                 //Get songs of the other artists by doing an API call (getSongs)
                 //Display a piece of lyrics
                 //Propose 4 songs
+                verses = lyrics.lyrics_body.split("\n\n");
+                let songs = this.state.songs;
+                songs.push(goodSong);
+                console.log(songs);
+                songs = this.shuffle(songs);
+                answers = <div>{songs[0].track_name} <br/> {songs[1].track_name} <br/> {songs[2].track_name} <br/> {songs[3].track_name}</div>
+                questionParam = verses[2];
                 break;
             default:
                 break;
@@ -83,26 +136,13 @@ class RunningQuiz extends Component {
     }
 
     render() {
-        console.log(this.nextQuestion())
-        let res = null;
-        switch(this.state.status){
-            case 'initial':
-                break;
-            case 'LOADED':
-                res = this.nextQuestion();
-                break;
-            default:
-                break;
-        }
+        this.nextQuestion()
+        const nextQuestion = this.state.nextQuestion
         return (
             <div className="RunningQuiz">
                 <Sidebar model={modelInstance} store={this.props.store}/>
                 <div className="col-md-7">
-                    {res}<br/>
-                    - Prop 1 <br/>
-                    - Prop 2 <br/>
-                    - Prop 3 <br/>
-                    - Prop 4 <br/>
+                    {nextQuestion != null && <div>{nextQuestion.quest} <br/>{nextQuestion.param} <br/> {nextQuestion.ans}</div>}<br/>
                 </div>
             </div>
         );
