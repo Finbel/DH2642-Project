@@ -10,6 +10,7 @@ package-lock.json
 
 # Configuration
 src/configure.js
+src/firebase.js
 
 # Logging
 npm-debug.log*

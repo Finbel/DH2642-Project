@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from "../Sidebar/Sidebar";
-import './SelectedArtists.css';
+//import './SelectedArtists.css';
 
 
 class SelectedArtists extends Component {
@@ -9,7 +9,9 @@ class SelectedArtists extends Component {
         super(props);
         this.state = {
             status: 'initial',
-            artists: this.props.model.getArtists()
+            artists: this.props.model.getArtists(),
+            searchStatus:'initial',
+            suggestion: this.props.model.getRandomArtists()
         }
     }
 
@@ -32,71 +34,93 @@ class SelectedArtists extends Component {
             artists : this.props.model.getArtists()
         })
     }
-    refresh = function() {
-        return;
-    }
 
     setArtists = function(name, id){
         this.props.model.setArtistsName(name, id);
 
     }
 
-    takeQuiz = function(){
-        this.changeStatus();
-        for(var i = 1; i < 5; i++){
-            console.log(this.props.model.getArtistsName(i).split(" "));
-            var name = this.props.model.getArtistsName(i).split(" ");
-            name = name.join("+");
-            this.props.model.searchArtist(name).then(j => {
-                console.log(j);
-                this.props.model.addArtists(j)
-            })
+    setInput(name){
+        this.setState({
+            input: name
+        });
+    }
 
+    displayRandomArtists = function(){
+        return this.state.suggestion.map((artist) =>
+            <div className="col-md-2"><button onClick={() => {
+                this.props.model.searchArtist(artist).then(data =>
+                    this.props.model.addArtists(data[0])).catch( () =>
+                console.log('error'));
+                console.log("click")
+            }}>{artist}</button></div>
+        );
+    }
+
+    search = function(){
+        this.setState({
+            searchStatus:'loading'
+        });
+        this.props.model.searchArtist(this.state.input).then( artists => {
+            this.setState({
+                searchStatus: 'LOADED',
+                search : artists
+            })
+            }).catch(() => {
+            this.setState({
+                status: 'ERROR'
+            })
+        });
+    }
+
+    displayArtists = function(){
+        if(this.state.search) {
+            return this.state.search.map(artist =>
+                <div className="col-md-2"><button onClick={() => this.props.model.addArtists(artist)}>
+                    {artist.artist_name}
+                </button></div>)
         }
     }
 
 
     render() {
+        let waitForArtists = null;
+        switch (this.state.searchStatus) {
+            case 'initial':
+                waitForArtists = null;
+            case 'loading':
+                waitForArtists = <em>Loading...</em>
+                break;
+            case 'LOADED':
+                waitForArtists = null;
+                break;
+            default:
+                waitForArtists = <b>Failed to load data, please try again</b>
+                break;
+        }
+
         return (
             <div className="SelectedArtists">
                 <Sidebar model={this.props.model} store={this.props.store}/>
                 <div className="col-md-7">
-                    <p>We have randomly chosen celebrities for you ! Be free to change the celebrities by clicking on the refresh button.</p>
-                    <div className="row">
-                        <div className="col-md-3">Beyonce</div>
-                        <div className="col-md-3" onClick = {() => this.refresh()}> Refresh </div>
-                        <br/>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-3">Rihanna</div>
-                        <div className="col-md-3" onClick = {() => this.refresh()}> Refresh </div>
-                        <br/>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-3">Justin Bieber</div>
-                        <div className="col-md-3" onClick = {() => this.refresh()}> Refresh </div>
-                        <br/>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-3">Bruno Mars</div>
-                        <div className="col-md-3" onClick = {() => this.refresh()}> Refresh </div>
-                        <br/>
-                    </div>
+                    <div className="row">Suggestion :</div>
+                    <div className="row">{this.displayRandomArtists()}</div>
                     <div className="row">
                         Didn't find artists you want? You can type in your favourite artists here : <br/><br/>
                         <div className="typein">
-                        <input type="text" id="search1" onChange = {(event) => this.setArtists(event.target.value, 1)}></input>
-                        <br/><br/>
-                        <input type="text" id="search2" onChange = {(event) => this.setArtists(event.target.value, 2)}></input>
-                        <br/><br/>
-                        <input type="text" id="search3" onChange = {(event) => this.setArtists(event.target.value, 3)}></input>
-                        <br/><br/>
-                        <input type="text" id="search4" onChange = {(event) => this.setArtists(event.target.value, 4)}></input>
+                            <div className="col-md-3">
+                                <input type="text" id="search1" onChange = {(event) => this.setInput(event.target.value)}></input>
+                            </div>
+                            <div className="col-md-2">
+                                <button className="btn btn-info" onClick={() => this.search()}>search</button>
+                            </div>
                         </div>
                     </div>
+                    {waitForArtists}
+                    {this.displayArtists()}
                     <div className = "buttons">
                         <Link to="/questions/1">
-                            <button className="btn btn-info" onClick = {() => this.takeQuiz()}> Take the quiz !</button>
+                            <button className="btn btn-info" onClick = {() => this.changeStatus()}> Take the quiz !</button>
                         </Link>
                     </div>
                 </div>

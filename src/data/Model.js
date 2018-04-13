@@ -6,6 +6,8 @@ const httpOptions = {
 
 const Model = function () {
 
+    let suggestions = ["Beyonce", "Bruno Mars", "Drake", "Lady Gaga", "Coldplay", "Rihanna",
+    "Eminem", "Justin Bieber", "Katy Perry", "Ed Sheeran", "Shakira", "Luis Fonsi"]
     let artistsName = [null, null, null, null, null];
     let artists = [];
     let observers = [];
@@ -13,6 +15,14 @@ const Model = function () {
     let questions = [{question: "Who this song belongs to ?", id : 0}]
         //, {question: "Complete the lyrics of this song", id:1},
         //{question: "Match the lyrics to the song", id :2}];
+
+    this.getRandomArtists = function(){
+        let res = [];
+        for(var i = 0; i < 5; i++){
+            res.push(suggestions[this.getRandomInt(suggestions.length)]);
+        }
+        return res;
+    }
 
     this.setArtistsName = function(name, id){
         artistsName[id-1] = name;
@@ -26,6 +36,16 @@ const Model = function () {
     }
 
     this.addArtists = function(artist){
+        if(artists.length == 4){
+            alert("You can't have more than 4 artists");
+            return;
+        }
+        for(var i = 0; i< artists.length; i++){
+            if (artist.artist_id === artists[i].artist_id){
+                alert("You've already chosen this artist");
+                return;
+            }
+        }
         artists.push(artist);
         notifyObservers('artists');
     }
@@ -59,6 +79,8 @@ const Model = function () {
     // API Calls
 
     this.getSongs = function(artist){
+        artist = artist.split(" ");
+        artist = artist.join("+");
         var param = 'f_has_lyrics=1&page=1&page_size=5&q_track_artist='+artist+'&s_track_rating=desc';
         const url = `https://musixmatchcom-musixmatch.p.mashape.com/wsr/1.1/track.search?${param}`;
         return fetch(url, httpOptions)
@@ -84,7 +106,7 @@ const Model = function () {
     }
 
     this.searchArtist = function(name){
-        var param = 'page=1&page_size=1&q_artist=' + name + '&s_artist_rating=desc';
+        var param = 'page=1&page_size=5&q_artist=' + name + '&s_artist_rating=desc';
         const url = `https://musixmatchcom-musixmatch.p.mashape.com/wsr/1.1/artist.search?${param}`;
         return fetch(url, httpOptions).then(processResponse).catch(handleError);
     }
