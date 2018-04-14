@@ -1,5 +1,4 @@
 # MusicQuiz to-do list
----
 
 ## Mid-project review
 
