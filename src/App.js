@@ -7,10 +7,20 @@ import Finalpoints from "./Finalpoints/Finalpoints";
 import RunningQuiz from "./RunningQuiz/RunningQuiz";
 import { modelInstance } from './data/Model'
 import quizApp from './reducer/reducers';
-import * as firebase from 'firebase';
-import './config-firebase.js';
+import firebase from 'firebase';
+var KEY = require("./configure.js")
+
 
 const store= createStore(quizApp);
+
+// Firebase configuration
+var firebaseConfig = {
+    apiKey: KEY.FIREBASE_API_KEY,
+    authDomain: "dh2642-aa0f4.firebaseapp.com",
+    databaseURL: "https://dh2642-aa0f4.firebaseio.com",
+    storageBucket: "dh2642-aa0f4.appspot.com",
+};
+firebase.initializeApp(firebaseConfig);
 
 class App extends Component {
 

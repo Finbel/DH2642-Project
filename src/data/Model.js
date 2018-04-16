@@ -1,7 +1,6 @@
-import YOUR_API_KEY from '../configure.js';
+var KEY = require("../configure.js")
 const httpOptions = {
-    headers: {'X-Mashape-Key': YOUR_API_KEY}
-
+    headers: {'X-Mashape-Key': KEY.YOUR_API_KEY}
 };
 
 const Model = function () {
