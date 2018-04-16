@@ -2,9 +2,7 @@
 
 ## Mid-project review
 
-- Set up server/database on Firebase.
-	- https://www.youtube.com/watch?v=LOeioOKUKI8
-	- https://firebase.google.com/docs/web/setup?authuser=1
+- ~~Set up server/database on Firebase.~~
 - Write our README.md file properly.
 
 
