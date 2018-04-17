@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Sidebar from "../Sidebar/Sidebar";
-import { modelInstance } from '../data/Model'
+import { modelInstance } from '../data/Model';
+import { Link } from 'react-router-dom';
+import Finalpoints from "../Finalpoints/Finalpoints";
 
 
 
@@ -25,14 +27,12 @@ class RunningQuiz extends Component {
 
     }
 
-
-
     async nextQuestion() {
-        console.log("nexquestion()")
         const question = modelInstance.getRandomQuestion();
         const artists = this.state.artists;
         let lyrics = null;
-        if (artists.length !== 4 || artists === undefined || this.state.nextQuestion || this.state.missingWords || this.state.songs) {
+        if (artists.length !== 4 || artists === undefined || this.state.nextQuestion ||
+            this.state.missingWords || this.state.songs || this.state.userAnswer) {
             return;
         }
         modelInstance.addAskedQuestion(question);
@@ -60,7 +60,7 @@ class RunningQuiz extends Component {
         let words = verse.split(" ");
         let missingwords = [words[3], words[4], words[5]];
         this.setState({
-            missingWords: missingwords.join(" ")
+            goodAnswer: missingwords.join(" ")
         })
         words[3] = "_";
         words[4] = "_";
@@ -89,6 +89,23 @@ class RunningQuiz extends Component {
         return a;
     }
 
+    submitAnswer(answer){
+        if(this.state.userAnswer){
+            if (this.state.userAnswer === this.state.goodAnswer){
+                modelInstance.setSuccess(1);
+            } else {
+                modelInstance.setSuccess(2);
+            }
+        } else {
+            console.log(answer)
+            if (answer === this.state.goodAnswer){
+                modelInstance.setSuccess(1);
+            } else {
+                modelInstance.setSuccess(2);
+            }
+        }
+    }
+
     displayQuestion = function(question, goodArtist, goodSong, lyrics){
         let questionParam;
         let answers;
@@ -97,11 +114,19 @@ class RunningQuiz extends Component {
             case 0:
                 //Pick up the name of the song goodSong
                 //Propose the 4 singers
+                this.setState({
+                    goodAnswer: goodArtist.artist_name
+                });
                 questionParam = goodSong.track_name;
-                answers = <div>{this.state.artists[0].artist_name} <br/>
-                    {this.state.artists[1].artist_name} <br/>
-                    {this.state.artists[2].artist_name} <br/>
-                    {this.state.artists[3].artist_name}
+                answers = <div>
+                    <div className="row">
+                        <div className="col-md-6" onClick={() => this.submitAnswer(this.state.artists[0].artist_name)}> {this.state.artists[0].artist_name} </div>
+                        <div className="col-md-6" onClick={() => this.submitAnswer(this.state.artists[1].artist_name)}> {this.state.artists[1].artist_name} </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-6" onClick={() => this.submitAnswer(this.state.artists[2].artist_name)}> {this.state.artists[2].artist_name} </div>
+                        <div className="col-md-6" onClick={() => this.submitAnswer(this.state.artists[3].artist_name)}> {this.state.artists[3].artist_name} </div>
+                    </div>
                 </div>
                 break;
             case 1:
@@ -121,12 +146,24 @@ class RunningQuiz extends Component {
                 //Get songs of the other artists by doing an API call (getSongs)
                 //Display a piece of lyrics
                 //Propose 4 songs
+                this.setState({
+                    goodAnswer: goodSong.track_name
+                });
                 verses = lyrics.lyrics_body.split("\n\n");
                 let songs = this.state.songs;
                 songs.push(goodSong);
                 console.log(songs);
                 songs = this.shuffle(songs);
-                answers = <div>{songs[0].track_name} <br/> {songs[1].track_name} <br/> {songs[2].track_name} <br/> {songs[3].track_name}</div>
+                answers = <div>
+                        <div className="row">
+                            <div className="col-md-6" onClick={() => this.submitAnswer(songs[0].track_name)}> {songs[0].track_name} </div>
+                            <div className="col-md-6" onClick={() => this.submitAnswer(songs[1].track_name)}> {songs[1].track_name} </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-6" onClick={() => this.submitAnswer(songs[2].track_name)}> {songs[2].track_name} </div>
+                            <div className="col-md-6" onClick={() => this.submitAnswer(songs[3].track_name)}> {songs[3].track_name} </div>
+                        </div>
+                    </div>
                 questionParam = verses[2];
                 break;
             default:
@@ -136,6 +173,11 @@ class RunningQuiz extends Component {
     }
 
     render() {
+        if(modelInstance.getNumberOfAskedQuestion() === 10){
+            return <Finalpoints/>
+        }
+        let id = modelInstance.getNumberOfAskedQuestion() + 1;
+        let path = "/questions/"+id;
         this.nextQuestion()
         const nextQuestion = this.state.nextQuestion
         return (
@@ -144,6 +186,9 @@ class RunningQuiz extends Component {
                 <div className="col-md-7">
                     {nextQuestion != null && <div>{nextQuestion.quest} <br/>{nextQuestion.param} <br/> {nextQuestion.ans}</div>}<br/>
                 </div>
+                <Link to ={path}>
+                    <button>Next Question</button>
+                </Link>
             </div>
         );
     }

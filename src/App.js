@@ -22,6 +22,7 @@ var firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
+
 class App extends Component {
 
     render() {

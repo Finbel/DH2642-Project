@@ -7,7 +7,6 @@ const Model = function () {
 
     let suggestions = ["Beyonce", "Bruno Mars", "Drake", "Lady Gaga", "Coldplay", "Rihanna",
     "Eminem", "Justin Bieber", "Katy Perry", "Ed Sheeran", "Shakira", "Luis Fonsi"]
-    let artistsName = [null, null, null, null, null];
     let artists = [];
     let observers = [];
     let asked = [];
@@ -16,23 +15,27 @@ const Model = function () {
          {question: "Complete the lyrics of this song", id:1},
         {question: "Match the lyrics to the song", id :2}];
 
+    var isInArray = function (value, array){
+        for (var i = 0; i< array.length; i++){
+            if (array[i] === value){
+                return true;
+            }
+        }
+        return false;
+    }
+
     this.getRandomArtists = function(){
         let res = [];
+        let indexes = [];
         for(var i = 0; i < 5; i++){
-            res.push(suggestions[this.getRandomInt(suggestions.length)]);
+            let index = this.getRandomInt(suggestions.length);
+            while (isInArray(index, indexes)){
+                index = this.getRandomInt(suggestions.length);
+            }
+            res.push(suggestions[index]);
+            indexes.push(index);
         }
         return res;
-    }
-
-    this.setArtistsName = function(name, id){
-        artistsName[id-1] = name;
-    }
-
-    this.getArtistsName = function (id){
-        if (id === 0){
-            return artistsName;
-        }
-        return artistsName[id-1];
     }
 
     this.addArtists = function(artist){
@@ -69,6 +72,11 @@ const Model = function () {
 
     this.getAskedQuestions = function(){
         return asked;
+    }
+
+    this.setSuccess = function(success){
+        asked[asked.length-1].success = success;
+        //notifyObservers("success");
     }
 
     this.getNumberOfAskedQuestion = function() {

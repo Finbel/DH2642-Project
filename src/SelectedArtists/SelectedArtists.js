@@ -15,7 +15,11 @@ class SelectedArtists extends Component {
         }
     }
 
-    changeStatus(){
+    takeQuiz(){
+        if (this.state.artists.length !== 4){
+            alert("Please select 4 artists");
+            return;
+        }
         this.setState({
             status: 'LOADED'
         });
@@ -35,10 +39,6 @@ class SelectedArtists extends Component {
         })
     }
 
-    setArtists = function(name, id){
-        this.props.model.setArtistsName(name, id);
-
-    }
 
     setInput(name){
         this.setState({
@@ -55,7 +55,7 @@ class SelectedArtists extends Component {
                 console.log("click")
             }}>{artist}</button></div>
         );
-    }
+    };
 
     search = function(){
         this.setState({
@@ -71,7 +71,7 @@ class SelectedArtists extends Component {
                 status: 'ERROR'
             })
         });
-    }
+    };
 
     displayArtists = function(){
         if(this.state.search) {
@@ -80,7 +80,7 @@ class SelectedArtists extends Component {
                     {artist.artist_name}
                 </button></div>)
         }
-    }
+    };
 
 
     render() {
@@ -100,10 +100,20 @@ class SelectedArtists extends Component {
                 break;
         }
 
+        let quizBtn = null;
+        if(this.state.artists.length === 4){
+            quizBtn = <div className = "buttons">
+                <Link to="/questions/1">
+                    <button className="btn btn-info" onClick = {() => this.takeQuiz()}> Take the quiz !</button>
+                </Link>
+            </div>
+        }
+
         return (
             <div className="SelectedArtists">
                 <Sidebar model={this.props.model} store={this.props.store}/>
                 <div className="col-md-7">
+                    <div className="row">Choose 4 artists then take the quiz !</div>
                     <div className="row">Suggestion :</div>
                     <div className="row">{this.displayRandomArtists()}</div>
                     <div className="row">
@@ -119,11 +129,7 @@ class SelectedArtists extends Component {
                     </div>
                     {waitForArtists}
                     {this.displayArtists()}
-                    <div className = "buttons">
-                        <Link to="/questions/1">
-                            <button className="btn btn-info" onClick = {() => this.changeStatus()}> Take the quiz !</button>
-                        </Link>
-                    </div>
+                    {quizBtn}
                 </div>
             </div>
         );
