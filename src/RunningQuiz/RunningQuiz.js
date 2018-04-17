@@ -32,7 +32,7 @@ class RunningQuiz extends Component {
         const artists = this.state.artists;
         let lyrics = null;
         if (artists.length !== 4 || artists === undefined || this.state.nextQuestion ||
-            this.state.missingWords || this.state.songs || this.state.userAnswer) {
+            this.state.goodAnswer || this.state.songs || this.state.userAnswer) {
             return;
         }
         modelInstance.addAskedQuestion(question);
@@ -90,14 +90,16 @@ class RunningQuiz extends Component {
     }
 
     submitAnswer(answer){
+        //TODO : Put the CSS properties of the different answers (grey when clicked for example)
         if(this.state.userAnswer){
+            console.log(this.state.userAnswer + " // " + this.state.goodAnswer);
             if (this.state.userAnswer === this.state.goodAnswer){
                 modelInstance.setSuccess(1);
             } else {
                 modelInstance.setSuccess(2);
             }
         } else {
-            console.log(answer)
+            console.log(answer + " // " + this.state.goodAnswer);
             if (answer === this.state.goodAnswer){
                 modelInstance.setSuccess(1);
             } else {
@@ -120,12 +122,12 @@ class RunningQuiz extends Component {
                 questionParam = goodSong.track_name;
                 answers = <div>
                     <div className="row">
-                        <div className="col-md-6" onClick={() => this.submitAnswer(this.state.artists[0].artist_name)}> {this.state.artists[0].artist_name} </div>
-                        <div className="col-md-6" onClick={() => this.submitAnswer(this.state.artists[1].artist_name)}> {this.state.artists[1].artist_name} </div>
+                        <div className="col-md-6" onClick={() => this.setState({userAnswer: this.state.artists[0].artist_name})}> {this.state.artists[0].artist_name} </div>
+                        <div className="col-md-6" onClick={() => this.setState({userAnswer: this.state.artists[1].artist_name})}> {this.state.artists[1].artist_name} </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-6" onClick={() => this.submitAnswer(this.state.artists[2].artist_name)}> {this.state.artists[2].artist_name} </div>
-                        <div className="col-md-6" onClick={() => this.submitAnswer(this.state.artists[3].artist_name)}> {this.state.artists[3].artist_name} </div>
+                        <div className="col-md-6" onClick={() => this.setState({userAnswer: this.state.artists[2].artist_name})}> {this.state.artists[2].artist_name} </div>
+                        <div className="col-md-6" onClick={() => this.setState({userAnswer: this.state.artists[3].artist_name})}> {this.state.artists[3].artist_name} </div>
                     </div>
                 </div>
                 break;
@@ -156,12 +158,12 @@ class RunningQuiz extends Component {
                 songs = this.shuffle(songs);
                 answers = <div>
                         <div className="row">
-                            <div className="col-md-6" onClick={() => this.submitAnswer(songs[0].track_name)}> {songs[0].track_name} </div>
-                            <div className="col-md-6" onClick={() => this.submitAnswer(songs[1].track_name)}> {songs[1].track_name} </div>
+                            <div className="col-md-6" onClick={() => this.setState({userAnswer: songs[0].track_name})}> {songs[0].track_name} </div>
+                            <div className="col-md-6" onClick={() => this.setState({userAnswer: songs[1].track_name})}> {songs[1].track_name} </div>
                         </div>
                         <div className="row">
-                            <div className="col-md-6" onClick={() => this.submitAnswer(songs[2].track_name)}> {songs[2].track_name} </div>
-                            <div className="col-md-6" onClick={() => this.submitAnswer(songs[3].track_name)}> {songs[3].track_name} </div>
+                            <div className="col-md-6" onClick={() => this.setState({userAnswer: songs[2].track_name})}> {songs[2].track_name} </div>
+                            <div className="col-md-6" onClick={() => this.setState({userAnswer: songs[3].track_name})}> {songs[3].track_name} </div>
                         </div>
                     </div>
                 questionParam = verses[2];
@@ -173,13 +175,15 @@ class RunningQuiz extends Component {
     }
 
     render() {
-        if(modelInstance.getNumberOfAskedQuestion() === 10){
-            return <Finalpoints/>
-        }
         let id = modelInstance.getNumberOfAskedQuestion() + 1;
-        let path = "/questions/"+id;
-        this.nextQuestion()
-        const nextQuestion = this.state.nextQuestion
+        let path;
+        if(id === 11){
+            path = "/finalpoints"
+        } else {
+            path = "/questions/"+id;
+        }
+        this.nextQuestion();
+        const nextQuestion = this.state.nextQuestion;
         return (
             <div className="RunningQuiz">
                 <Sidebar model={modelInstance} store={this.props.store}/>
@@ -187,7 +191,7 @@ class RunningQuiz extends Component {
                     {nextQuestion != null && <div>{nextQuestion.quest} <br/>{nextQuestion.param} <br/> {nextQuestion.ans}</div>}<br/>
                 </div>
                 <Link to ={path}>
-                    <button>Next Question</button>
+                    <button onClick={()=>this.submitAnswer()}>Next Question</button>
                 </Link>
             </div>
         );
