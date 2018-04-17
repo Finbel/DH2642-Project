@@ -1,0 +1,16 @@
+.Sidebar
+{
+    background-image: url(sidebar-image.png);
+     height:1000px;
+   
+}
+
+.title
+{
+	padding-top: 60px;
+    font-size: 70px;
+    text-align: center;
+    text-shadow: 2px 2px 2px grey;
+    font-family: sans-serif;
+    color: white;
+}

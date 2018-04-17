@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
+import './Sidebar.css';
 
 class Sidebar extends Component {
     constructor(props){
@@ -69,9 +69,9 @@ class Sidebar extends Component {
         }
 
         return (
-            <div className="Sidebar col-md-5">
-                <div className="row">
-                    <h2>Quiz</h2>
+            <div className="Sidebar col-md-4">
+                <div className="row title">
+                    <h2>MusicQuiz</h2>
                 </div>
                 <div className="row">Your artists :</div>
                 {this.displayArtists()}
