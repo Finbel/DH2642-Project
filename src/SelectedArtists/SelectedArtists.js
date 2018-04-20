@@ -6,6 +6,7 @@ import imgURL from './../SelectedArtists/firstpart.png';
 import imgURL1 from './../SelectedArtists/secondpart.png';
 import imgURL2 from './../SelectedArtists/thirdpart.png';
 
+
 class SelectedArtists extends Component {
     constructor(props){
         super(props);
@@ -78,9 +79,9 @@ class SelectedArtists extends Component {
     displayArtists = function(){
         if(this.state.search) {
             return this.state.search.map(artist =>
-                <div className="col-md-2"><button onClick={() => this.props.model.addArtists(artist)}>
+                <div className="col-md-2"><div className="newartist"><button onClick={() => this.props.model.addArtists(artist)}>
                     {artist.artist_name}
-                </button></div>)
+                </button></div></div>)
         }
     };
 
@@ -114,28 +115,37 @@ class SelectedArtists extends Component {
         return (
             <div className="SelectedArtists">
                 <Sidebar model={this.props.model} store={this.props.store}/>
-                    <div className="col-md-7 content">
+                    <div className="col-md-8 content">
                         <div className="row first">
-                        <img src={imgURL} />
-                        Choose 4 artists then take the quiz !
+                        <div className = "instruction"><img src={imgURL} />  Choose 4 artists then take the quiz !</div>
+                        <div className = "detail">you can select recommended ones or choose your own :)</div>
                         </div>
 
-                        <div className="row second">Suggestion :</div>
-                        <div className="row">{this.displayRandomArtists()}</div>
-                        <div className="row third">
-                            Didn't find artists you want? You can type in your favourite artists here : <br/><br/>
+                        <div className="row instruction">
+                            <div className="secondrow">
+                            <img src={imgURL1} />  Suggestion :
+                            </div>
+                        </div>
+                        <div className="row displayartists">{this.displayRandomArtists()}</div>
+                        
+                        <div className="thirdrow">
+                            <div className="row instruction">
+                              <img src={imgURL2} />  Didn't find artists you want? You can type in your favourite artists here : <br/><br/>
+                            </div>
                             <div className="typein">
                                 <div className="col-md-3">
                                     <input type="text" id="search1" onChange = {(event) => this.setInput(event.target.value)}></input>
                                 </div>
                                 <div className="col-md-2">
-                                    <button className="forbuttons" onClick={() => this.search()}>search</button>
+                                    <button className="searchbutton" onClick={() => this.search()}>search</button>
                                 </div>
                             </div>
                         </div>
                         {waitForArtists}
                         {this.displayArtists()}
-                        {quizBtn}
+                            <div className = "takequiz">
+                            {quizBtn}
+                            </div>
                     </div>
             </div>
         );

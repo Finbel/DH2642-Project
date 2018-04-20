@@ -72,7 +72,7 @@ class Sidebar extends Component {
 
 
 
-            <div className="Sidebar col-md-5">
+            <div className="Sidebar col-md-4">
                     <div className="row title">
                         MusicQuiz
                     </div>

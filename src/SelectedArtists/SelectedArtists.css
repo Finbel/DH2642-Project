@@ -1,29 +1,83 @@
 .first{
-	padding-left: 40px;
-    
-    height:10px;
-   
+	padding-top: 40px;
+	padding-left: 60px;   
 }
 
 
-.second{
-
-
-}
-
-.third{
+.secondrow{
+	padding-left: 60px;
+	padding-top: 10px;
+	padding-bottom: 20px;
 
 }
 
-.content{
- text-align: justify;
-    padding-top: 30px;
-    font-size: 20px;
+.displayartists{
+	text-align: justify;
+	padding-left: 56px;
+	font-size: 20px;
+	font-family: sans-serif;
+	padding-bottom: 40px;
+}
+
+.thirdrow{
+	padding-left: 60px;
+	padding-top: 10px;
+	padding-bottom: 20px;
+	padding-right:20px;
+
+}
+
+.instruction{
+    padding-top: 60px;
+    text-align: justify;
+    font-size: 40px;
     color: black;
 	font-family: sans-serif;
 }
 
-.row{
-	padding:10px;
+.detail{
+	text-align: justify;
+	padding-left: 56px;
+    font-size: 20px;
+    color: black;
+	font-family: sans-serif;
+	padding-bottom: 40px;
 }
 
+.forbuttons{
+	text-align: center;
+    height: 80px;
+    width: 350px;
+    border-radius: 40px;
+    border: 1px solid black;
+    color:black;
+    font-size: 24px;
+    background:rgba(0, 0, 240, 0);    
+}
+
+.takequiz{
+    padding-left: 56px;
+}
+
+.searchbutton{
+	text-align: center;
+    height: 30px;
+    width: 150px;
+    border-radius: 40px;
+    border: 1px solid black;
+    color:black;
+    font-size: 20px;
+    background:rgba(0, 0, 0, 0)
+    
+}
+
+.newartist{
+	text-align: center;
+    height: 30px;
+    width: 150px;
+    border-radius: 40px;
+    border: 1px solid black;
+    color:black;
+    font-size: 20px;
+    background:rgba(0, 0, 0, 0)
+}
