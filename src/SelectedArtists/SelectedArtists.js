@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from "../Sidebar/Sidebar";
-//import './SelectedArtists.css';
-
+import './SelectedArtists.css';
+import imgURL from './../SelectedArtists/firstpart.png';
+import imgURL1 from './../SelectedArtists/secondpart.png';
+import imgURL2 from './../SelectedArtists/thirdpart.png';
 
 class SelectedArtists extends Component {
     constructor(props){
@@ -112,25 +114,29 @@ class SelectedArtists extends Component {
         return (
             <div className="SelectedArtists">
                 <Sidebar model={this.props.model} store={this.props.store}/>
-                <div className="col-md-7">
-                    <div className="row">Choose 4 artists then take the quiz !</div>
-                    <div className="row">Suggestion :</div>
-                    <div className="row">{this.displayRandomArtists()}</div>
-                    <div className="row">
-                        Didn't find artists you want? You can type in your favourite artists here : <br/><br/>
-                        <div className="typein">
-                            <div className="col-md-3">
-                                <input type="text" id="search1" onChange = {(event) => this.setInput(event.target.value)}></input>
-                            </div>
-                            <div className="col-md-2">
-                                <button className="forbuttons" onClick={() => this.search()}>search</button>
+                    <div className="col-md-7 content">
+                        <div className="row first">
+                        <img src={imgURL} />
+                        Choose 4 artists then take the quiz !
+                        </div>
+
+                        <div className="row second">Suggestion :</div>
+                        <div className="row">{this.displayRandomArtists()}</div>
+                        <div className="row third">
+                            Didn't find artists you want? You can type in your favourite artists here : <br/><br/>
+                            <div className="typein">
+                                <div className="col-md-3">
+                                    <input type="text" id="search1" onChange = {(event) => this.setInput(event.target.value)}></input>
+                                </div>
+                                <div className="col-md-2">
+                                    <button className="forbuttons" onClick={() => this.search()}>search</button>
+                                </div>
                             </div>
                         </div>
+                        {waitForArtists}
+                        {this.displayArtists()}
+                        {quizBtn}
                     </div>
-                    {waitForArtists}
-                    {this.displayArtists()}
-                    {quizBtn}
-                </div>
             </div>
         );
     }

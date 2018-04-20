@@ -1,26 +1,29 @@
-p {
-	padding:10px;
-	text-align: left;
+.first{
+	padding-left: 40px;
     
+    height:10px;
+   
+}
+
+
+.second{
+
+
+}
+
+.third{
+
+}
+
+.content{
+ text-align: justify;
+    padding-top: 30px;
     font-size: 20px;
+    color: black;
+	font-family: sans-serif;
 }
 
 .row{
 	padding:10px;
 }
 
-.typein{
-	text-align:left;
-}
-
-.forbuttons{
-	text-align: center;
-    height: 80px;
-    width: 350px;
-    border-radius: 40px;
-    border: 1px solid black;
-    color:black;
-    font-size: 24px;
-    background:rgba(55, 51, 240, 0.1)
-    
-}
