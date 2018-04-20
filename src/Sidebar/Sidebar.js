@@ -69,16 +69,27 @@ class Sidebar extends Component {
         }
 
         return (
-            <div className="Sidebar col-md-4">
-                <div className="row title">
-                    <h2>MusicQuiz</h2>
-                </div>
-                <div className="row">Your artists :</div>
-                {this.displayArtists()}
-                <div className="row">{this.state.numOfQuest}/10</div>
-                {this.displayQuestions()}
-                {btn}
+
+
+
+            <div className="Sidebar col-md-5">
+                    <div className="row title">
+                        MusicQuiz
+                    </div>
+
+                    <div className="displayartists">
+                        <div className="row display">Your artists :</div>
+                        <div className = "name">{this.displayArtists()}</div>
+
+                        <div className="row number">{this.state.numOfQuest}/10</div>
+                        <div className="row questions">{this.displayQuestions()}</div>
+                        {btn}
+                    </div>
             </div>
+        
+        
+
+
         );
     }
 }

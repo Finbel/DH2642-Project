@@ -104,7 +104,7 @@ class SelectedArtists extends Component {
         if(this.state.artists.length === 4){
             quizBtn = <div className = "buttons">
                 <Link to="/questions/1">
-                    <button className="btn btn-info" onClick = {() => this.takeQuiz()}> Take the quiz !</button>
+                    <button className="forbuttons" onClick = {() => this.takeQuiz()}> Take the quiz !</button>
                 </Link>
             </div>
         }
@@ -123,7 +123,7 @@ class SelectedArtists extends Component {
                                 <input type="text" id="search1" onChange = {(event) => this.setInput(event.target.value)}></input>
                             </div>
                             <div className="col-md-2">
-                                <button className="btn btn-info" onClick={() => this.search()}>search</button>
+                                <button className="forbuttons" onClick={() => this.search()}>search</button>
                             </div>
                         </div>
                     </div>
