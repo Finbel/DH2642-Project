@@ -98,8 +98,7 @@ class RunningQuiz extends Component {
                 modelInstance.setSuccess(2);
             }
         } else {
-            console.log(answer + " // " + this.state.goodAnswer);
-            if (answer === this.state.goodAnswer){
+            if (answer.toLowerCase() === this.state.goodAnswer.toLowerCase()){
                 modelInstance.setSuccess(1);
             } else {
                 modelInstance.setSuccess(2);
