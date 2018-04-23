@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Sidebar from "../Sidebar/Sidebar";
 import { modelInstance } from '../data/Model';
 import { Link } from 'react-router-dom';
-import Finalpoints from "../Finalpoints/Finalpoints";
 
 
 
@@ -21,7 +20,7 @@ class RunningQuiz extends Component {
         if (msg === 'artists') {
             this.setState({
                 artists: modelInstance.getArtists()
-            })
+            });
             console.log(this.state.artists);
         }
 
@@ -56,9 +55,9 @@ class RunningQuiz extends Component {
     }
 
     createBlank(verse){
-        //TO CHANGE
         let words = verse.split(" ");
-        let missingwords = [words[3], words[4], words[5]];
+        let index = modelInstance.getRandomInt(words.length-3);
+        let missingwords = [words[index], words[index+1], words[index+2]];
         this.setState({
             goodAnswer: missingwords.join(" ")
         })
@@ -108,6 +107,16 @@ class RunningQuiz extends Component {
         }
     }
 
+    selectVerse(verses){
+        let index;
+        do {
+            //max number is verses.length-1 otherwise we can select the "This lyrics is NOT for commercial use"
+            index = modelInstance.getRandomInt(verses.length-1);
+        }
+        while(verses[index].length < 15);
+        return verses[index];
+    }
+
     displayQuestion = function(question, goodArtist, goodSong, lyrics){
         let questionParam;
         let answers;
@@ -139,7 +148,8 @@ class RunningQuiz extends Component {
                 //Input for the missing words
                 //verify the matching
                 verses = lyrics.lyrics_body.split("\n\n");
-                questionParam = <div>{goodArtist.artist_name} - {goodSong.track_name} <br/> {this.createBlank(verses[1])}</div>;
+                let goodVerse = this.selectVerse(verses);
+                questionParam = <div>{goodArtist.artist_name} - {goodSong.track_name} <br/> {this.createBlank(goodVerse)}</div>;
                 answers = <input type="text" onChange={(event) => this.setState({userAnswer: event.target.value})}>
                 </input>
                 break;
@@ -166,7 +176,7 @@ class RunningQuiz extends Component {
                             <div className="col-md-6" onClick={(event) => {this.setState({userAnswer: songs[3].track_name}); event.target.style.background = 'grey'}}> {songs[3].track_name} </div>
                         </div>
                     </div>
-                questionParam = verses[2];
+                questionParam = this.selectVerse(verses);
                 break;
             default:
                 break;
