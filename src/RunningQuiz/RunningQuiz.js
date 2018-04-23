@@ -9,10 +9,9 @@ class RunningQuiz extends Component {
     constructor(props){
         super(props);
         this.state = {
-            askedQuestions : modelInstance.getAskedQuestions(),
             artists: modelInstance.getArtists(),
             nextQuestion: null,
-        }
+        };
         modelInstance.addObserver(this);
     }
 
@@ -21,39 +20,52 @@ class RunningQuiz extends Component {
             this.setState({
                 artists: modelInstance.getArtists()
             });
-            console.log(this.state.artists);
         }
-
     }
 
+    /*
+    * This function get a random question, get the good artist/song/lyrics associated and create
+    * an object with all the information which is stored in the state
+    */
     async nextQuestion() {
         const question = modelInstance.getRandomQuestion();
         const artists = this.state.artists;
         let lyrics = null;
+
+        //No need to run again this function if we have already done it
         if (artists.length !== 4 || artists === undefined || this.state.nextQuestion ||
             this.state.goodAnswer || this.state.songs || this.state.userAnswer) {
             return;
         }
+
         modelInstance.addAskedQuestion(question);
+
         const goodArtist = artists[modelInstance.getRandomInt(artists.length)];
         // Wait until the promise resolves
         const goodArtistSongs = await modelInstance.getSongs(goodArtist.artist_name);
         // Here we have access to the resolved promise
         const goodSong = goodArtistSongs[modelInstance.getRandomInt(goodArtistSongs.length)];
+
         if(question.id === 1 || question.id === 2){
             lyrics = await modelInstance.getLyrics(goodSong.track_id);
         }
+
         if(question.id === 2){
             await this.threeSongs(goodArtist);
         }
+
         const obj = this.displayQuestion(question, goodArtist, goodSong, lyrics)
-        // Here you should have access to obj
+
         this.setState({
             nextQuestion: obj
         })
 
     }
 
+    /*
+    * This function select 3 random consecutive words in the given text and replace
+    * them by "_". The missing words are stored in the state for future verification
+    */
     createBlank(verse){
         let words = verse.split(" ");
         let index = modelInstance.getRandomInt(words.length-3);
@@ -67,6 +79,11 @@ class RunningQuiz extends Component {
         return words.join(" ");
     }
 
+
+    /*
+    * This function pick up 3 different songs from 3 different artists who are
+    * not the goodArtist (reponse to the question)
+    */
     async threeSongs(goodArtist){
         let songs = [];
         for (var i = 0; i < this.state.artists.length; i++){
@@ -80,6 +97,10 @@ class RunningQuiz extends Component {
         })
     }
 
+
+    /*
+    * This function shuffle the order of an array
+    */
     shuffle(a) {
         for (let i = a.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -88,10 +109,13 @@ class RunningQuiz extends Component {
         return a;
     }
 
+
+    /*
+    * This function compares the good answer to the user answer and set
+    * the success depending on the answer
+    */
     submitAnswer(answer){
-        //TODO : Put the CSS properties of the different answers (grey when clicked for example)
         if(this.state.userAnswer){
-            console.log(this.state.userAnswer + " // " + this.state.goodAnswer);
             if (this.state.userAnswer === this.state.goodAnswer){
                 modelInstance.setSuccess(1);
             } else {
@@ -106,6 +130,11 @@ class RunningQuiz extends Component {
         }
     }
 
+
+    /*
+    * This method select a verse among all the possible verses. It has to contain more
+    * than 15 words otherwise it is too short.
+    */
     selectVerse(verses){
         let index;
         do {
@@ -116,6 +145,10 @@ class RunningQuiz extends Component {
         return verses[index];
     }
 
+
+    /*
+    * this function construct the question object depending on the question
+    */
     displayQuestion = function(question, goodArtist, goodSong, lyrics){
         let questionParam;
         let answers;
@@ -183,6 +216,7 @@ class RunningQuiz extends Component {
         return {quest : question.question, param: questionParam, ans : answers};
     }
 
+    
     render() {
         let id = modelInstance.getNumberOfAskedQuestion() + 1;
         let path;
