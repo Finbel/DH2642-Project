@@ -66,7 +66,7 @@ const Model = function () {
     }
 
     this.addAskedQuestion = function(question) {
-        asked.push({question : question.question, id: question.id, index: asked.length+1, success : 0});
+        asked.push({question : question.question, id: question.id, index: asked.length+1, success : 2});
         notifyObservers("quest");
     }
 

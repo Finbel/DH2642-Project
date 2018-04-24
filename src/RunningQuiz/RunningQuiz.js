@@ -116,16 +116,16 @@ class RunningQuiz extends Component {
     */
     submitAnswer(answer){
         if(this.state.userAnswer){
-            if (this.state.userAnswer === this.state.goodAnswer){
+            if (this.state.userAnswer.toLowerCase() === this.state.goodAnswer.toLowerCase()){
                 modelInstance.setSuccess(1);
             } else {
-                modelInstance.setSuccess(2);
+                modelInstance.setSuccess(0);
             }
         } else {
-            if (answer.toLowerCase() === this.state.goodAnswer.toLowerCase()){
+            if (answer === this.state.goodAnswer){
                 modelInstance.setSuccess(1);
             } else {
-                modelInstance.setSuccess(2);
+                modelInstance.setSuccess(0);
             }
         }
     }
@@ -191,7 +191,8 @@ class RunningQuiz extends Component {
                 //Display a piece of lyrics
                 //Propose 4 songs
                 this.setState({
-                    goodAnswer: goodSong.track_name
+                    goodAnswer: goodSong.track_name,
+                    userAnswer: ""
                 });
                 verses = lyrics.lyrics_body.split("\n\n");
                 let songs = this.state.songs;
@@ -216,7 +217,7 @@ class RunningQuiz extends Component {
         return {quest : question.question, param: questionParam, ans : answers};
     }
 
-    
+
     render() {
         let id = modelInstance.getNumberOfAskedQuestion() + 1;
         let path;

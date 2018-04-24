@@ -1,31 +1,50 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import Sidebar from "../Sidebar/Sidebar";
 import './Finalpoints.css';
 
 class Finalpoints extends Component {
 
- // displayComment = function(points){ //not sure how to deal with the function of displaying different comments with differnt points
- //        let success;
-        
- //            case 1:
- //                points = 4;
- //                break;
- //            case 2:
- //                points = 3;
- //                break;
- //            case 3:
- //                points = 2;
- //                break;
- //            case 4:
- //                points = 1;
- //                break;
- //            default:
- //                ponits = "";
- //                break;
- //        }
- //        return <div key={quest.index}>Question {quest.index} {success}</div>
-   // }
+    totalPoints(){
+        let questions = this.props.model.getAskedQuestions();
+        let total = 0;
+        for (var i = 0; i < 10; i++){
+            total += questions[i].success;
+        }
+        return total;
+    }
+
+ displayComment(){
+        let points = this.totalPoints();
+        let comment;
+        let questions = this.props.model.getAskedQuestions().map(quest => <div key={quest.index}>Question {quest.index} : {quest.success} point</div>)
+        switch(points){
+            case 0:
+            case 1:
+            case 2:
+                comment = "Oh... You don't seem to know those artists very well :'( Try again with other ones !";
+                break;
+            case 3:
+            case 4:
+            case 5:
+                comment = "Well, it seems you know some of them. You'll do better next time !";
+                break;
+            case 6:
+            case 7:
+            case 8:
+                comment = "Well done ! You know them a lot :)";
+                break;
+            case 9:
+            case 10:
+                comment = "Wouaw ! Congratulation, your score is impressive ! :D";
+                break;
+            default:
+                break;
+        }
+        return <div>
+            <div className="row"> {questions}</div>
+            <div className="row"> Your score : {points} / 10</div>
+            <div className="row">{comment}</div>
+        </div>
+   }
 
     render() {
         return (
@@ -38,7 +57,7 @@ class Finalpoints extends Component {
                 </div>
                 <div className = "row">
                     <div className = "col-md-12">
-                        <p>It seems you know all these artists well :)</p>
+                        {this.displayComment()}
                     </div>
                     
                 </div>

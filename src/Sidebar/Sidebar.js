@@ -22,11 +22,7 @@ class Sidebar extends Component {
             this.setState({
                 artists: this.props.model.getArtists()
             });
-            console.log(this.state.artists)
         }
-        //this.setState({
-        //numOfQuest : this.props.model.getNumberOfAskedQuestion(),
-        //})
 
     }
 
@@ -36,7 +32,7 @@ class Sidebar extends Component {
             case 1:
                 success = "1pt";
                 break;
-            case 2:
+            case 0:
                 success = "0pt";
                 break;
             default:
@@ -47,7 +43,7 @@ class Sidebar extends Component {
     }
 
     displayQuestions = function(){
-        return this.state.askedQuestions.map((question) => this.displayQuest(question))
+        return this.state.askedQuestions.map((question) => this.displayQuest(question));
     }
 
     displayArtists = function(){
@@ -57,7 +53,6 @@ class Sidebar extends Component {
 
     render() {
         let btn = null;
-        console.log(this.props.store.getState().status);
         switch(this.props.store.getState().status){
             case 'initial':
                 btn = <Link to="/">
@@ -69,9 +64,6 @@ class Sidebar extends Component {
         }
 
         return (
-
-
-
             <div className="Sidebar col-md-4">
                     <div className="row title">
                         MusicQuiz
@@ -86,10 +78,6 @@ class Sidebar extends Component {
                         {btn}
                     </div>
             </div>
-        
-        
-
-
         );
     }
 }
