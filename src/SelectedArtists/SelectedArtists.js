@@ -51,7 +51,7 @@ class SelectedArtists extends Component {
 
     displayRandomArtists = function(){
         return this.state.suggestion.map((artist) =>
-            <div className="col-md-2"><button onClick={() => {
+            <div className="col-md-2 every"><button className="buttondisplay" onClick={() => {
                 this.props.model.searchArtist(artist).then(data =>
                     this.props.model.addArtists(data[0])).catch( () =>
                 console.log('error'));
