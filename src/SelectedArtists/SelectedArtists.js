@@ -79,9 +79,9 @@ class SelectedArtists extends Component {
     displayArtists = function(){
         if(this.state.search) {
             return this.state.search.map(artist =>
-                <div className="col-md-2"><div className="newartist"><button onClick={() => this.props.model.addArtists(artist)}>
+                <div className="col-md-2"><button className="buttondisplay" onClick={() => this.props.model.addArtists(artist)}>
                     {artist.artist_name}
-                </button></div></div>)
+                </button></div>)
         }
     };
 
@@ -138,11 +138,15 @@ class SelectedArtists extends Component {
                                 </div>
                                 <div className="col-md-2">
                                     <button className="searchbutton" onClick={() => this.search()}>search</button>
+                                   
                                 </div>
                             </div>
                         </div>
+                        <div className = "row display">
+                        
                         {waitForArtists}
                         {this.displayArtists()}
+                        </div>
                             <div className = "takequiz">
                             {quizBtn}
                             </div>

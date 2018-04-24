@@ -55,14 +55,16 @@
     color: white;	
 }
 
-.gobutton{
-	text-align: center;
+
+.btn{
+    text-align: center;
     height: 80px;
-    width: 350px;
+    width: 390px;
     border-radius: 40px;
     border: 1px solid white;
     color:white;
-    font-size: 24px;
+    font-size: 22px;
     background:rgba(255, 251, 240, 0.1)
-    
 }
+
+

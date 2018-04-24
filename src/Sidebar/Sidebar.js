@@ -56,7 +56,7 @@ class Sidebar extends Component {
         switch(this.props.store.getState().status){
             case 'initial':
                 btn = <Link to="/">
-                    <button>Go back and select another quiz</button>
+                    <button className ="btn">Go back and select another quiz</button>
                 </Link>
                 break;
             default:
