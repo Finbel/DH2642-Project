@@ -51,7 +51,7 @@ class SelectedArtists extends Component {
 
     displayRandomArtists = function(){
         return this.state.suggestion.map((artist) =>
-            <div className="col-md-2"><button onClick={() => {
+            <div className="col-md-2 every"><button className="buttondisplay" onClick={() => {
                 this.props.model.searchArtist(artist).then(data =>
                     this.props.model.addArtists(data[0])).catch( () =>
                 console.log('error'));
@@ -79,9 +79,9 @@ class SelectedArtists extends Component {
     displayArtists = function(){
         if(this.state.search) {
             return this.state.search.map(artist =>
-                <div className="col-md-2"><div className="newartist"><button onClick={() => this.props.model.addArtists(artist)}>
+                <div className="col-md-2"><button className="buttondisplay" onClick={() => this.props.model.addArtists(artist)}>
                     {artist.artist_name}
-                </button></div></div>)
+                </button></div>)
         }
     };
 
@@ -138,11 +138,15 @@ class SelectedArtists extends Component {
                                 </div>
                                 <div className="col-md-2">
                                     <button className="searchbutton" onClick={() => this.search()}>search</button>
+                                   
                                 </div>
                             </div>
                         </div>
+                        <div className = "row display">
+                        
                         {waitForArtists}
                         {this.displayArtists()}
+                        </div>
                             <div className = "takequiz">
                             {quizBtn}
                             </div>

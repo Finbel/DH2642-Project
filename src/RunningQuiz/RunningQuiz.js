@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Sidebar from "../Sidebar/Sidebar";
 import { modelInstance } from '../data/Model';
 import { Link } from 'react-router-dom';
-
+import './RunningQuiz.css';
 
 
 class RunningQuiz extends Component {
@@ -163,12 +163,12 @@ class RunningQuiz extends Component {
                 questionParam = goodSong.track_name;
                 answers = <div>
                     <div className="row">
-                        <div className="col-md-6" onClick={(event) => {this.setState({userAnswer: this.state.artists[0].artist_name}); event.target.style.background = 'grey'}}> {this.state.artists[0].artist_name} </div>
-                        <div className="col-md-6" onClick={(event) => {this.setState({userAnswer: this.state.artists[1].artist_name}); event.target.style.background = 'grey'}}> {this.state.artists[1].artist_name} </div>
+                        <div className="col-md-6 options" onClick={(event) => {this.setState({userAnswer: this.state.artists[0].artist_name}); event.target.style.background = 'grey'}}> {this.state.artists[0].artist_name} </div>
+                        <div className="col-md-6 options" onClick={(event) => {this.setState({userAnswer: this.state.artists[1].artist_name}); event.target.style.background = 'grey'}}> {this.state.artists[1].artist_name} </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-6" onClick={(event) => {this.setState({userAnswer: this.state.artists[2].artist_name}); event.target.style.background = 'grey'}}> {this.state.artists[2].artist_name} </div>
-                        <div className="col-md-6" onClick={(event) => {this.setState({userAnswer: this.state.artists[3].artist_name}); event.target.style.background = 'grey'}}> {this.state.artists[3].artist_name} </div>
+                        <div className="col-md-6 options" onClick={(event) => {this.setState({userAnswer: this.state.artists[2].artist_name}); event.target.style.background = 'grey'}}> {this.state.artists[2].artist_name} </div>
+                        <div className="col-md-6 options" onClick={(event) => {this.setState({userAnswer: this.state.artists[3].artist_name}); event.target.style.background = 'grey'}}> {this.state.artists[3].artist_name} </div>
                     </div>
                 </div>
                 break;
@@ -201,12 +201,12 @@ class RunningQuiz extends Component {
                 songs = this.shuffle(songs);
                 answers = <div>
                         <div className="row">
-                            <div className="col-md-6" onClick={(event) => {this.setState({userAnswer: songs[0].track_name}); event.target.style.background = 'grey'}}> {songs[0].track_name} </div>
-                            <div className="col-md-6" onClick={(event) => {this.setState({userAnswer: songs[1].track_name}); event.target.style.background = 'grey'}}> {songs[1].track_name} </div>
+                            <div className="col-md-6 options" onClick={(event) => {this.setState({userAnswer: songs[0].track_name}); event.target.style.background = 'grey'}}> {songs[0].track_name} </div>
+                            <div className="col-md-6 options" onClick={(event) => {this.setState({userAnswer: songs[1].track_name}); event.target.style.background = 'grey'}}> {songs[1].track_name} </div>
                         </div>
                         <div className="row">
-                            <div className="col-md-6" onClick={(event) => {this.setState({userAnswer: songs[2].track_name}); event.target.style.background = 'grey'}}> {songs[2].track_name} </div>
-                            <div className="col-md-6" onClick={(event) => {this.setState({userAnswer: songs[3].track_name}); event.target.style.background = 'grey'}}> {songs[3].track_name} </div>
+                            <div className="col-md-6 options" onClick={(event) => {this.setState({userAnswer: songs[2].track_name}); event.target.style.background = 'grey'}}> {songs[2].track_name} </div>
+                            <div className="col-md-6 options" onClick={(event) => {this.setState({userAnswer: songs[3].track_name}); event.target.style.background = 'grey'}}> {songs[3].track_name} </div>
                         </div>
                     </div>
                 questionParam = this.selectVerse(verses);
@@ -229,14 +229,18 @@ class RunningQuiz extends Component {
         this.nextQuestion();
         const nextQuestion = this.state.nextQuestion;
         return (
-            <div className="RunningQuiz">
+            <div className="RunningQuiz row">
+                
                 <Sidebar model={modelInstance} store={this.props.store}/>
-                <div className="col-md-7">
-                    {nextQuestion != null && <div>{nextQuestion.quest} <br/>{nextQuestion.param} <br/> {nextQuestion.ans}</div>}<br/>
+                
+                <div className="col-md-7 question">
+                    {nextQuestion != null && <div>{nextQuestion.quest} <br/>{nextQuestion.param} <br/> {nextQuestion.ans}<br/></div>}
+                    <div className ="position">
+                        <Link to ={path}>
+                            <button className="nextquestion" onClick={()=>this.submitAnswer()}>Next Question</button>
+                        </Link>
+                    </div>
                 </div>
-                <Link to ={path}>
-                    <button onClick={()=>this.submitAnswer()}>Next Question</button>
-                </Link>
             </div>
         );
     }

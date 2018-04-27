@@ -1,9 +1,31 @@
-.Quiz{
-	padding-top: 100px;
-	text-align: justify;
-	padding-left: 56px;
-	font-size: 20px;
+.nextquestion{
+    text-align: center;
+    height: 70px;
+    width: 180px;
+    border-radius: 30px;
+    border: 1px solid black;
+    color:black;
+    font-size: 20px;
+    }
+
+.options{
+	text-align: left;
+	padding-top: 10px;
+    font-size: 20px;
+    color: black;
 	font-family: sans-serif;
-	padding-bottom: 40px;
+	padding-bottom: 10px;
 }
 
+.question{
+	padding:5%;
+	text-align: left;
+    font-size: 24px;
+    color: black;
+	font-family: sans-serif;
+	padding-bottom: 20px;
+}
+
+.position{
+	padding-left:80%;
+}
