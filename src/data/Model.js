@@ -53,6 +53,7 @@ const Model = function () {
         notifyObservers('artists');
     }
 
+
     this.removeArtist = function(artist){
         let newArray = [];
         for(var i = 0; i < artists.length; i++){

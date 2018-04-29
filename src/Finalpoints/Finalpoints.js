@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Finalpoints.css';
+import { Link } from 'react-router-dom';
 
 class Finalpoints extends Component {
 
@@ -49,17 +50,33 @@ class Finalpoints extends Component {
     render() {
         return (
             <div className="Finalpoints">
-                <div className = "row title1">
-                    <div className = "col-md-12">
-                        <h3>You have done the quiz!</h3>
-                    </div>
-                    
-                </div>
                 <div className = "row">
-                    <div className = "col-md-12">
-                        {this.displayComment()}
-                    </div>
-                    
+                        <div className = "col-md-5 side">
+                           
+                        </div>
+
+                        <div className = "col-md-7">
+                            <div className="score">
+                               <div className="firstly row">
+                                 <div className="title1">YOU HAVE DONE THE QUIZ!</div>
+                               </div>
+
+                               <div className="secondly row">
+                                    <div className="personal">
+                                    {this.displayComment()}
+                                    </div>
+                               </div>
+                            </div>
+
+                                <div className="thirdly row">
+                                    <div className="tryagain">
+                                        <Link to = "/selection">
+                                            <button className = "btn again">GO BACK AND TRY AGAIN</button>
+                                        </Link>
+                                    </div>
+                               </div>
+
+                    </div>            
                 </div>
             </div>
         );

@@ -56,16 +56,6 @@ class Sidebar extends Component {
 
 
     render() {
-        let btn = null;
-        switch(this.props.store.getState().status){
-            case 'initial':
-                btn = <Link to="/">
-                    <button className ="btn">Go back and select another quiz</button>
-                </Link>
-                break;
-            default:
-                break;
-        }
 
         return (
             <div className="Sidebar col-md-4">
@@ -79,7 +69,6 @@ class Sidebar extends Component {
 
                         <div className="row number">{this.state.numOfQuest}/10</div>
                         <div className="row questions">{this.displayQuestions()}</div>
-                        {btn}
                     </div>
             </div>
         );
