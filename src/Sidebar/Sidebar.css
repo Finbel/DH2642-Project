@@ -1,7 +1,7 @@
 .Sidebar
 {
     background-image: url(sidebar-image.png);
-     height:800px;
+     height:1000px;
    
 }
 
@@ -30,7 +30,7 @@
 
 .name{
 	padding-top: 30px;
-   	padding-left: 240px;
+   	padding-left: 200px;
     font-size: 20px;
     text-align: left;
     font-family: sans-serif;
@@ -67,4 +67,13 @@
     background:rgba(255, 251, 240, 0.1)
 }
 
+.remove{
+    text-align: center;
+    border: 1px solid white;
+    background:rgba(255, 251, 240, 0.1)
+}
 
+.wrap{
+      padding-right: 20px;
+      padding-bottom: 2px;  
+}
