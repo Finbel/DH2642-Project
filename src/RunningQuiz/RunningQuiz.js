@@ -40,9 +40,14 @@ class RunningQuiz extends Component {
 
         modelInstance.addAskedQuestion(question);
 
-        const goodArtist = artists[modelInstance.getRandomInt(artists.length)];
+        let goodArtist = artists[modelInstance.getRandomInt(artists.length)];
         // Wait until the promise resolves
-        const goodArtistSongs = await modelInstance.getSongs(goodArtist.artist_name);
+        let goodArtistSongs = await modelInstance.getSongs(goodArtist.artist_name);
+
+        while(goodArtistSongs.length === 0){
+            goodArtist = artists[modelInstance.getRandomInt(artists.length)];
+            goodArtistSongs = await modelInstance.getSongs(goodArtist.artist_name);
+        }
         // Here we have access to the resolved promise
         const goodSong = goodArtistSongs[modelInstance.getRandomInt(goodArtistSongs.length)];
 
@@ -89,6 +94,7 @@ class RunningQuiz extends Component {
         for (var i = 0; i < this.state.artists.length; i++){
             if(goodArtist.artist_id !== this.state.artists[i].artist_id) {
                 const song = await modelInstance.getSongs(this.state.artists[i].artist_name);
+                console.log(song);
                 songs.push(song[modelInstance.getRandomInt(song.length)]);
             }
         }
@@ -197,7 +203,6 @@ class RunningQuiz extends Component {
                 verses = lyrics.lyrics_body.split("\n\n");
                 let songs = this.state.songs;
                 songs.push(goodSong);
-                console.log(songs);
                 songs = this.shuffle(songs);
                 answers = <div>
                         <div className="row">
@@ -219,6 +224,14 @@ class RunningQuiz extends Component {
 
 
     render() {
+        let waitingQuestion = null;
+        switch(this.state.nextQuestion){
+            case null:
+                waitingQuestion = "Loading...";
+                break;
+            default:
+                break;
+        }
         let id = modelInstance.getNumberOfAskedQuestion() + 1;
         let path;
         if(id === 11){
@@ -234,6 +247,7 @@ class RunningQuiz extends Component {
                 <Sidebar model={modelInstance} store={this.props.store}/>
                 
                 <div className="col-md-7 question">
+                    {waitingQuestion}
                     {nextQuestion != null && <div>{nextQuestion.quest} <br/>{nextQuestion.param} <br/> {nextQuestion.ans}<br/></div>}
                     <div className ="position">
                         <Link to ={path}>

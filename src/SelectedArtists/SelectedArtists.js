@@ -51,7 +51,7 @@ class SelectedArtists extends Component {
 
     displayRandomArtists = function(){
         return this.state.suggestion.map((artist) =>
-            <div className="col-md-2 every"><button className="buttondisplay" onClick={() => {
+            <div className="col-md-2 every" key={artist.artist_id}><button className="buttondisplay" onClick={() => {
                 this.props.model.searchArtist(artist).then(data =>
                     this.props.model.addArtists(data[0])).catch( () =>
                 console.log('error'));
@@ -60,24 +60,36 @@ class SelectedArtists extends Component {
         );
     };
 
-    search = function(){
+    async search(){
         this.setState({
             searchStatus:'loading'
         });
-        this.props.model.searchArtist(this.state.input).then( artists => {
-            this.setState({
-                searchStatus: 'LOADED',
-                search : artists
-            })
+        let artists = await this.props.model.searchArtist(this.state.input);
+        let artistsWithSongs = [];
+        for(var i = 0; i < artists.length; i++){
+            this.props.model.getSongs(artists[i].artist_name).then(data => {
+                if(data.length > 0){
+                    artistsWithSongs.push(artists[i]);
+                }
+                this.setState({
+                    searchStatus: 'LOADED',
+                    search : artists
+                });
             }).catch(() => {
-            this.setState({
-                status: 'ERROR'
-            })
-        });
+                this.setState({
+                    status: 'ERROR'
+                })
+        })
+        };
     };
+
+
 
     displayArtists = function(){
         if(this.state.search) {
+            if(this.state.search.length === 0){
+                return "Sorry, we couldn't find any songs related to this artist."
+            }
             return this.state.search.map(artist =>
                 <div className="col-md-2"><button className="buttondisplay" onClick={() => this.props.model.addArtists(artist)}>
                     {artist.artist_name}

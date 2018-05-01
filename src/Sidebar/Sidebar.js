@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import './Sidebar.css';
 
 class Sidebar extends Component {
