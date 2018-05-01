@@ -49,8 +49,10 @@ class Sidebar extends Component {
     displayArtists = function(){
         return this.state.artists.map(artist =>
             <div className="row">
-                <div className="col-md-11">{artist.artist_name}</div>
-                <div className="col-md-1" onClick={()=>this.props.model.removeArtist(artist)}>X</div>
+                <div className="col-md-9">{artist.artist_name}</div>
+                <div className="col-md-3 wrap">
+                <button className="remove" onClick={()=>this.props.model.removeArtist(artist)}>X</button>
+                </div>
             </div> )
     }
 
